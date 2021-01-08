@@ -1,0 +1,13 @@
+apiVersion: v1
+description: "Kubernetes resources for cray-csm-barebones-recipe-install"
+name: "cray-csm-barebones-recipe-install"
+home: "scms/image-recipes"
+version: 1.0.0
+keywords:
+  - ims
+  - kiwi
+sources:
+  - "https://stash.us.cray.com/projects/SCMS/repos/image-recipes/browse"
+maintainers:
+  - name: ecozzi
+    email: eric.cozzi@hpe.com

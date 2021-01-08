@@ -1,0 +1,41 @@
+@Library('dst-shared@master') _
+
+pipeline {
+
+  agent { node { label 'dstbuild' } }
+
+  environment {
+    PRODUCT = 'csm'
+    VERSION = sh(returnStdout: true, script: "cat .version").trim()
+    GIT_TAG = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
+    BUILD_DATE = new Date().format( 'yyyyMMddHHmmss' )
+    IMAGE_TAG = getDockerImageTag(version: "${VERSION}", buildDate: "${BUILD_DATE}", gitTag: "${GIT_TAG}", gitBranch: "${GIT_BRANCH}")
+    RELEASE_TAG = setReleaseTag()
+  }
+
+  stages {
+    stage('Helm Preparation') {
+      when {expression {return fileExists("runBuildPrep-helm-chart.sh") == true}}
+      steps {
+          sh "./runBuildPrep-helm-chart.sh"
+      }
+    }
+    stage('Package') {
+      steps {
+        packageHelmCharts(chartsPath: "${env.WORKSPACE}/kubernetes",
+                          buildResultsPath: "${env.WORKSPACE}/build/results",
+                          buildDate: "${env.BUILD_DATE}")
+      }
+    }
+    stage('Publish') {
+      steps {
+        publishHelmCharts(chartsPath: "${env.WORKSPACE}/kubernetes")
+      }
+    }
+  }
+  post {
+    success {
+      findAndTransferArtifacts()
+    }
+  }
+}
