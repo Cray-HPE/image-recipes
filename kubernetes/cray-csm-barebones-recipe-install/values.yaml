@@ -13,3 +13,4 @@ cray-import-kiwi-recipe-image:
     name: "@product_name@-image-recipe-import-@product_version@"
     PRODUCT_NAME: "@product_name@"
     PRODUCT_VERSION: "@product_version@"
+    CREATE_BOS_SESSION_TEMPLATE: "True"
