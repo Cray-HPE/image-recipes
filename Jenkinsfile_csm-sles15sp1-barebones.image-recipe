@@ -21,4 +21,7 @@ kiwiImageRecipeBuildPipeline {
   // Build Scripts
   buildPrepScript="runBuildPrep-image-recipe.sh"
   buildScript="runKiwiBuild.sh"
+
+  // Disable cron job timer
+  timer="0 0 31 2 *"
 }
