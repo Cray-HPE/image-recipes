@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Copyright 2019-2020 Hewlett Packard Enterprise Development LP
+# Copyright 2019-2021 Hewlett Packard Enterprise Development LP
 source ./vars.sh
 
 # Set the product name and version

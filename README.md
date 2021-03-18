@@ -15,16 +15,16 @@ for example) will be kept under a common directory.
 
 > IMPORTANT: Due to limitations of the DST Jenkins Pipeline, the `cray-csm-barebones-recipe-install` 
 helm chart does not properly tag the correct docker image version for the 
-`cray-csm-sles15sp1-barebones-recipe`. This unfortunately means that, the helm chart
+`cray-csm-sles15sp2-barebones-recipe`. This unfortunately means that, the helm chart
 cannot be installed without overriding this value either manually or via the CSM sysmgmt
 manifest. Follow the instructions below to set the correct default override in the CSM 
 sysmgmt manifest.
 
 1. From the `kiwiImageRecipeBuildPipeline` job, find the docker image version for the
-   `cray-csm-sles15sp1-barebones-recipe` image
+   `cray-csm-sles15sp2-barebones-recipe` image
    
     ```
-    + docker push dtr.dev.cray.com/cray/cray-csm-sles15sp1-barebones-recipe:1.0.0-20201207175822_177d071
+    + docker push dtr.dev.cray.com/cray/cray-csm-sles15sp2-barebones-recipe:1.0.0-20201207175822_177d071
    ```
    
 2. Update the [CSM sysmgmt.yaml manifest](https://stash.us.cray.com/projects/CSM/repos/csm/browse/manifests/sysmgmt.yaml)
@@ -36,6 +36,6 @@ sysmgmt manifest.
         values:      
           cray-import-kiwi-recipe-image:
             import_image:
-              name: cray-csm-sles15sp1-barebones-recipe
+              name: cray-csm-sles15sp2-barebones-recipe
               tag: 1.0.0-20201207175822_177d071
    ```

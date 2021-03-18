@@ -1,0 +1,24 @@
+@Library("dst-shared@master") _
+kiwiImageRecipeBuildPipeline {
+
+  // Docker image parameters for the image containing the IMS manifest for the image/recipe
+  app="csm-sles15sp2-barebones-recipe"
+  name="csm-sles15sp2-barebones-recipe"
+  imagePrefix = "cray"
+  repository="cray"
+  description="Cray System Management (CSM) Barebones Recipes and Images"
+  dockerfile="Dockerfile_csm-sles15sp2-barebones.image-recipe"
+
+  // Product designation
+  product="csm"
+  productVersionScript="./.productVersionScript"
+
+  // Location and name of the recipe/image for the IMS manifest
+  recipeDirectory="kiwi-ng/cray-sles15sp2-barebones"
+  imageName="cray-shasta-csm-sles15sp2-barebones.x86_64"
+  distro="sles15"
+
+  // Build Scripts
+  buildPrepScript="runBuildPrep-image-recipe.sh"
+  buildScript="runKiwiBuild.sh"
+}
