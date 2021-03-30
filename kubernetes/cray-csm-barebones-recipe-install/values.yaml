@@ -1,4 +1,4 @@
-# Copyright 2020 Hewlett Packard Enterprise Development LP
+# Copyright 2020-2021 Hewlett Packard Enterprise Development LP
 #
 #   @***@ variables in this file are sed replaced using this repository's
 #   runBuildPrep.sh script.
@@ -7,7 +7,7 @@
 # For products that import Kiwi recipes and built-out images
 cray-import-kiwi-recipe-image:
   import_image:
-    name: cray-csm-sles15sp1-barebones-recipe
+    name: cray-csm-sles15sp2-barebones-recipe
 
   import_job:
     name: "@product_name@-image-recipe-import-@product_version@"
