@@ -9,7 +9,7 @@ pipeline {
             label "cray-recipes-github-push"
             containerTemplate {
                 name "cms-recipes-github-push-cont"
-                image "dtr.dev.cray.com/dst/cray-alpine3_build_environment:latest"
+                image "arti.dev.cray.com/dstbuildenv-misc-master-local/cray-alpine3_build_environment:latest"
                 ttyEnabled true
                 command "cat"
             }
