@@ -2,7 +2,8 @@ apiVersion: v1
 description: "Kubernetes resources for cray-csm-barebones-recipe-install"
 name: "cray-csm-barebones-recipe-install"
 home: "scms/image-recipes"
-version: 1.1.6
+# This placeholder string is replaced at build time by the build prep scripts
+version: @VERSION@
 keywords:
   - ims
   - kiwi

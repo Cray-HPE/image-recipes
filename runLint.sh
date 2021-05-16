@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Copyright 2020-2021 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -21,12 +22,9 @@
 #
 # (MIT License)
 
-set -ex
-
-{% for repo in values['repos'] %}
-{% if repo['imageinclude'] == 'true' %}
-zypper addrepo --priority {{ repo['priority'] }} {{ repo['path'] }} {{ repo['alias'] }}
-{% endif %}
-{% endfor %}
-
-exit 0
+./install_cms_meta_tools.sh || exit 1
+RC=0
+./cms_meta_tools/copyright_license_check/copyright_license_check.sh || RC=1
+./cms_meta_tools/go_lint/go_lint.sh || RC=1
+rm -rf ./cms_meta_tools
+exit $RC
