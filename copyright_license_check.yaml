@@ -1,0 +1,19 @@
+###################################################################################
+# Note: This is a config file for the file_filter tool, used to refine the scope
+# of files that should be checked for copyright/license headers by the
+# copyright_license_check tool. Both tools can be found in the cms-meta-tools
+# repo.
+###################################################################################
+
+# We want to make sure to check these files as well
+also_include_files:
+    - ".productVersionScript"
+
+also_include_extensions:
+    - "sh.j2"
+
+# This file has its own non-HPE copyright
+also_exclude_files:
+    - "kiwi-ng/cray-sles12sp3-barebones/config.sh"
+    - "kiwi-ng/cray-sles15-barebones/config.sh"
+    - "kiwi-ng/cray-sles15sp1-barebones/config.sh"
