@@ -1,4 +1,6 @@
-# Copyright 2019, 2021 Hewlett Packard Enterprise Development LP
+#!/bin/bash
+
+# Copyright 2020-2021 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -20,21 +22,9 @@
 #
 # (MIT License)
 
-# Query installed rpm to get kernel version.
-leads=`rpm -q kernel-default --last --queryformat "%{VERSION}-%{RELEASE}\n" \
-    | grep -v kernel | awk '{ sub(/[ \t]+$/, ""); print }' | sed -e 's/\(.*-.*\)\..*/\1/'`
-kernel_version="${leads}-default"
-
-# Lets check for a known module to insure we are using an complete kernel install
-mypath="/lib/modules/${kernel_version}/kernel/net/sunrpc/sunrpc.ko"
-
-echo "KERNEL VERSION  : ${kernel_version}"
-echo "LIB MODULES PATH : $mypath"
-
-# Bail if kernel module not found
-if [ -e "${mypath}" ]; then
-   dracut --no-hostonly --no-hostonly-cmdline -a "network nfs" --kver ${kernel_version} -I '/bin/grep' --xz -f /boot/initramfs-cray.img
-else
-   echo "Unable to validate presence of kernel modules directory ... aborting build\n"
-   exit 1
-fi
+./install_cms_meta_tools.sh || exit 1
+RC=0
+./cms_meta_tools/copyright_license_check/copyright_license_check.sh || RC=1
+./cms_meta_tools/go_lint/go_lint.sh || RC=1
+rm -rf ./cms_meta_tools
+exit $RC
