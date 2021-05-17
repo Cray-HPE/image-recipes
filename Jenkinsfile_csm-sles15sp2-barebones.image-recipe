@@ -21,4 +21,5 @@ kiwiImageRecipeBuildPipeline {
   // Build Scripts
   buildPrepScript="runBuildPrep-image-recipe.sh"
   buildScript="runKiwiBuild.sh"
+  lintScript="runLint.sh"
 }
