@@ -22,8 +22,6 @@
 #
 # (MIT License)
 
-./install_cms_meta_tools.sh || exit 1
 ./cms_meta_tools/copyright_license_check/copyright_license_check.sh || exit 1
 ./cms_meta_tools/go_lint/go_lint.sh || exit 1
-rm -rf ./cms_meta_tools
 exit 0
