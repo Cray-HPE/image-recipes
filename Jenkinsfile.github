@@ -1,0 +1,61 @@
+@Library('csm-shared-library') _
+
+pipeline {
+    agent {
+        label "metal-gcp-builder"
+    }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: "10"))
+        timestamps()
+    }
+
+    environment {
+        NAME = "cray-csm-sles15sp2-barebones-recipe"
+        DESCRIPTION = "Cray System Management (CSM) Barebones Recipes and Images"
+        IS_STABLE = getBuildIsStable()
+        VERSION = getDockerBuildVersion(isStable: env.IS_STABLE)
+        DOCKER_ARGS = getDockerBuildArgs(name: env.NAME, description: env.DESCRIPTION)
+        CHART_VERSION = getChartVersion(version: env.VERSION)
+    }
+
+    stages {
+        stage("Lint") {
+            steps {
+                sh "make lint"
+            }
+        }
+
+        stage("Build") {
+            parallel {
+                stage('Kiwi Image') {
+                    steps {
+                        sh "make kiwi_image"
+                    }
+                }
+
+                stage('Chart') {
+                    steps {
+                        sh "make chart"
+                    }
+                }
+            }
+        }
+
+        stage('Publish ') {
+            steps {
+                script {
+                    publishCsmDockerImage(image: env.NAME, tag: env.VERSION, isStable: env.IS_STABLE)
+                    publishCsmHelmCharts(component: env.NAME, chartsPath: "${WORKSPACE}/kubernetes/.packaged", isStable: env.IS_STABLE)
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Own files so jenkins can clean them up later
+            postChownFiles()
+        }
+    }
+}
