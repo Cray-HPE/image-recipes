@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-# Copyright 2019-2021 Hewlett Packard Enterprise Development LP
+# Copyright 2020-2021 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -21,15 +20,9 @@
 #
 # (MIT License)
 
-source ./vars.sh
+# Ignore everything
+**
 
-# Update the version in Chart.yaml
-./cms_meta_tools/update_versions/update_versions.sh || exit 1
-rm -rf ./cms_meta_tools
-
-# Set the product name and version
-sed -i s/@product_name@/csm/g kubernetes/cray-csm-barebones-recipe-install/values.yaml
-sed -i s/@product_version@/${CSM_RELEASE_VERSION}/g kubernetes/cray-csm-barebones-recipe-install/values.yaml
-
-# Debug
-cat kubernetes/cray-csm-barebones-recipe-install/values.yaml
+# But the following
+!/manifest.yaml
+!/build/output/*shasta-1.5*
