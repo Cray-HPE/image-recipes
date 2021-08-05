@@ -28,7 +28,7 @@ source ./vars.sh
 sed -i s/CRAY.VERSION.HERE/${CSM_RELEASE_VERSION}/g kiwi-ng/cray-sles15sp2-barebones/config-template.xml.j2
 
 # Set the cray-ims-load-artifacts image version
-ims_load_artifacts_image_tag="1.3.2"
+ims_load_artifacts_image_tag="1.3.5"
 sed -i s/@ims_load_artifacts_image_tag@/${ims_load_artifacts_image_tag}/g Dockerfile_csm-sles15sp2-barebones.image-recipe
 
 # Set the product version in the DockerDockerfile_csm-sles15sp2-barebones.image-recipe file
