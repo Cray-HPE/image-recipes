@@ -22,9 +22,8 @@
 
 function run_cmd
 {
-    local rc
-    "$@"
-    rc=$?
+    local rc=0
+    "$@" || rc=$?
     if [ $rc -ne 0 ]; then
         echo "ERROR: Command failed with rc $rc: $*" 1>&2
     fi
@@ -36,9 +35,15 @@ function replace_tag_in_file
     # $1 tag string
     # $2 actual value
     # $3 target file
-    local tag actual target error tmpfile
+
+    local setx=${-//[^x]/}
+    # If set, temporarily disable set -x, to reduce clutter
+    [ -z "$setx" ] || set +x
+    
+    local tag actual target error tmpfile fakeloop
     if [ $# -ne 3 ]; then
         echo "PROGRAMMING LOGIC ERROR: $0 function requires exactly 3 arguments but received $#: $*" 1>&2
+        [ -z "$setx" ] || set -x
         return 1
     fi
     error=0
@@ -71,6 +76,7 @@ function replace_tag_in_file
     fi
 
     if [ $error -ne 0 ]; then
+        [ -z "$setx" ] || set -x
         return $error
     fi
 
@@ -80,13 +86,18 @@ function replace_tag_in_file
     done
 
     echo "Setting '$tag' to '$actual' in '$target'"
-    run_cmd cp "$target" "$tmpfile" || return 1
-    run_cmd sed -i "s/${tag}/${actual}/g" "$target" || return 1
-    echo "Changes:"
-    if diff "$target" "$tmpfile" ; then
-        echo "ERROR: sed command succeeded but no changes made to '$target'" 1>&2
-        return 1
-    fi
-    run_cmd rm -f "$tmpfile"
-    return 0
+    error=1
+    for fakeloop in 1 ; do
+        run_cmd cp "$target" "$tmpfile" || break
+        run_cmd sed -i "s/${tag}/${actual}/g" "$target" || break
+        echo "Changes:"
+        if diff "$target" "$tmpfile" ; then
+            echo "ERROR: sed command succeeded but no changes made to '$target'" 1>&2
+            break
+        fi
+        run_cmd rm -f "$tmpfile" || break
+        error=0
+    done
+    [ -z "$setx" ] || set -x
+    return $error
 }
