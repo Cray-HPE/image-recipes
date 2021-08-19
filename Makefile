@@ -42,19 +42,21 @@ CHART_NAME ?= cray-csm-barebones-recipe-install
 CHART_PATH ?= kubernetes
 HELM_UNITTEST_IMAGE ?= quintush/helm-unittest:3.3.0-0.2.5
 
-all : lint kiwi_image chart
+all : runbuildprep lint kiwi_image chart
 kiwi_image: kiwi_build_prep kiwi_build_image kiwi_build_manifest kiwi_docker_image
 chart: chart_setup chart_package chart_test
 
-lint:
-	./runLint.sh
+runbuildprep:
+	./cms_meta_tools/scripts/runBuildPrep.sh
 
+lint:
+	./cms_meta_tools/scripts/runLint.sh
 
 kiwi_build_prep:
 	docker run -v ${PWD}:/base \
 		${BUILD_IMAGE}
 		rm -rf /base/build
-	sh ./runBuildPrep-image-recipe.sh
+	./runBuildPrep-image-recipe.sh
 
 kiwi_build_image:
 	docker run --rm --privileged \
@@ -64,10 +66,8 @@ kiwi_build_image:
 		${BUILD_IMAGE} \
 		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
 
-
 kiwi_build_manifest:
 	$(eval FILES := $(shell find build/output/* -maxdepth 0 | tr '\r\n' ' ' ))
-
 	docker run --rm --privileged \
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
 		-e IMG_VER=${IMG_VER} -e BUILD_TS=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
@@ -75,7 +75,6 @@ kiwi_build_manifest:
 		--workdir /root \
 		${BUILD_IMAGE} \
 		bash -c 'ls -al /build && pwd && python3 create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" ${IMAGE_NAME}-${PRODUCT_VERSION}'
-
 	cat manifest.yaml
 
 kiwi_docker_image:

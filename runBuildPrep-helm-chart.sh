@@ -21,15 +21,14 @@
 #
 # (MIT License)
 
+set -ex
+
+source ./buildPrepHelpers.sh
 source ./vars.sh
 
-# Update the version in Chart.yaml
-./cms_meta_tools/update_versions/update_versions.sh || exit 1
-rm -rf ./cms_meta_tools
-
 # Set the product name and version
-sed -i s/@product_name@/csm/g kubernetes/cray-csm-barebones-recipe-install/values.yaml
-sed -i s/@product_version@/${CSM_RELEASE_VERSION}/g kubernetes/cray-csm-barebones-recipe-install/values.yaml
+replace_tag_in_file "@product_name@" csm kubernetes/cray-csm-barebones-recipe-install/values.yaml
+replace_tag_in_file "@product_version@" "${CSM_RELEASE_VERSION}" kubernetes/cray-csm-barebones-recipe-install/values.yaml
 
 # Debug
 cat kubernetes/cray-csm-barebones-recipe-install/values.yaml
