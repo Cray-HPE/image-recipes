@@ -1,6 +1,5 @@
 #
-#   @***@ variables in this file are sed replaced using this repository's
-#   runBuildPrep.sh script.
+#   @***@ variables in this file are sed replaced at build time
 #
 
 # For products that import Kiwi recipes and built-out images
