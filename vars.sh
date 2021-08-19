@@ -26,9 +26,9 @@ export VERSION="shasta-1.5"
 
 # For developing for a master distribution, use 'master' here.
 # For developing for a release distribution, use product release version
-#  - ${PARENT_BRANCH} comes from the DST pipeline
+#  - ${GIT_BRANCH} comes from the Jenkins pipeline
 #  - List versions of dependencies here as well
-if [ "${PARENT_BRANCH:-master}" == "master" ]
+if [ "${GIT_BRANCH:-master}" == "master" ]
 then
     export CSM_RELEASE_VERSION="master"
     export COS_RELEASE_VERSION="master"

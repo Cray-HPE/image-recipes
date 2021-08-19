@@ -2,7 +2,7 @@
 
 ## Building
 
-Build your image using the [ims build container](https://stash.us.cray.com/projects/SCMS/repos/ims/browse) 
+Build your image using the [ims build container](https://github.com/Cray-HPE/ims) 
 or manually using kiwi-ng as shown below.
 
     $ sudo kiwi-ng --type tbz system build --description /image-recipes/kiwi-ng/cray-sles12sp3-barebones --target /tmp/image-root/
