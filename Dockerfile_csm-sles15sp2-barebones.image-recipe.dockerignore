@@ -26,3 +26,4 @@
 # But the following
 !/manifest.yaml
 !/build/output/*shasta-1.5*
+!/gitInfo.txt
