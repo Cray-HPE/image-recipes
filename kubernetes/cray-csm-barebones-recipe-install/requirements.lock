@@ -1,0 +1,6 @@
+dependencies:
+- name: cray-import-kiwi-recipe-image
+  repository: https://artifactory.algol60.net/artifactory/csm-helm-charts/
+  version: 0.2.8
+digest: sha256:3ede4ed3f4544e8fe6f3df3a3c86b0160515b005a2569e795853b9ad6be3c7ad
+generated: "2021-09-14T13:51:09.341713001-05:00"
