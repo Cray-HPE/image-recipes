@@ -1,4 +1,5 @@
+---
 dependencies:
-- name: cray-service
-  version: "^6.0.0"
-  repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts/"
+  - name: cray-import-kiwi-recipe-image
+    version: "0.2.8"
+    repository: "https://artifactory.algol60.net/artifactory/csm-helm-charts/"
