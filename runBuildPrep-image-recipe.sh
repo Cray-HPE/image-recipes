@@ -30,4 +30,4 @@ source ./vars.sh
 replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" kiwi-ng/cray-sles15sp2-barebones/config-template.xml.j2
 
 # Set the product version in the Dockerfile_csm-sles15sp2-barebones.image-recipe file
-replace_tag_in_file "@product_version@" "${VERSION}" Dockerfile_csm-sles15sp2-barebones.image-recipe
+replace_tag_in_file product_version "${VERSION}" Dockerfile_csm-sles15sp2-barebones.image-recipe

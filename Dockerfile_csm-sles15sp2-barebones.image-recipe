@@ -21,7 +21,7 @@
 # (MIT License)
 
 # Dockerfile for image which holds the CSM barebones image (squashfs) and Kiwi recipe
-FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:@ims_load_artifacts_image_tag@ as base
+FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:9.9.9 as base
 
 # Use for testing/not in pipeline builds
 #FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:latest as base
@@ -30,4 +30,4 @@ FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:@ims_load
 COPY manifest.yaml /
 
 # Copy the image/recipe files
-COPY build/output/*@product_version@* /
+COPY build/output/*product_version* /
