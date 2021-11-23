@@ -5,10 +5,11 @@
 # For products that import Kiwi recipes and built-out images
 cray-import-kiwi-recipe-image:
   import_image:
-    name: cray-csm-sles15sp2-barebones-recipe
+    image:
+      repository: artifactory.algol60.net/csm-docker/stable/cray-csm-sles15sp2-barebones-recipe
 
   import_job:
-    name: "@product_name@-image-recipe-import-@product_version@"
-    PRODUCT_NAME: "@product_name@"
-    PRODUCT_VERSION: "@product_version@"
+    name: "product_name-image-recipe-import-product_version"
+    PRODUCT_NAME: "product_name"
+    PRODUCT_VERSION: "product_version"
     CREATE_BOS_SESSION_TEMPLATE: "True"

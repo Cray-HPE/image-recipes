@@ -25,5 +25,5 @@
 
 # But the following
 !/manifest.yaml
-!/build/output/*shasta-1.5*
+!/build/output/*csm-1.2*
 !/gitInfo.txt

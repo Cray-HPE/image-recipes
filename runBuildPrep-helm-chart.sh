@@ -27,8 +27,8 @@ source ./buildPrepHelpers.sh
 source ./vars.sh
 
 # Set the product name and version
-replace_tag_in_file "@product_name@" csm kubernetes/cray-csm-barebones-recipe-install/values.yaml
-replace_tag_in_file "@product_version@" "${CSM_RELEASE_VERSION}" kubernetes/cray-csm-barebones-recipe-install/values.yaml
+replace_tag_in_file "product_name" csm kubernetes/cray-csm-barebones-recipe-install/values.yaml
+replace_tag_in_file "product_version" "${CSM_RELEASE_VERSION}" kubernetes/cray-csm-barebones-recipe-install/values.yaml
 
 # Debug
 cat kubernetes/cray-csm-barebones-recipe-install/values.yaml
