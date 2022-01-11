@@ -1,4 +1,7 @@
-# Copyright 2019-2021 Hewlett Packard Enterprise Development LP
+#
+# MIT License
+#
+# (C) Copyright 2019-2022 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -12,15 +15,15 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 # THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 # OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-# (MIT License)
+# MIT License
 
-NAME ?= cray-csm-sles15sp2-barebones-recipe
+NAME ?= cray-csm-sles15sp3-barebones-recipe
 DOCKER_VERSION ?= $(shell head -1 .docker_version)
 CHART_VERSION ?= $(shell head -1 .chart_version)
 
@@ -30,13 +33,13 @@ GIT_BRANCH ?= local
 GIT_TAG ?= $(shell git rev-parse --short HEAD)
 IMG_VER ?= ${PRODUCT_VERSION}-${BUILD_DATE}-g${GIT_TAG}
 
-IMAGE_NAME ?= cray-shasta-csm-sles15sp2-barebones.x86_64
+IMAGE_NAME ?= cray-shasta-csm-sles15sp3-barebones.x86_64
 DISTRO ?= sles15
 
-DOCKERFILE ?= Dockerfile_csm-sles15sp2-barebones.image-recipe
+DOCKERFILE ?= Dockerfile_csm-sles15sp3-barebones.image-recipe
 BUILD_IMAGE ?= arti.dev.cray.com/cos-docker-master-local/cray-kiwi:latest
 BUILD_SCRIPT ?= runKiwiBuild.sh
-RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp2-barebones
+RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp3-barebones
 
 CHART_NAME ?= cray-csm-barebones-recipe-install
 CHART_PATH ?= kubernetes
