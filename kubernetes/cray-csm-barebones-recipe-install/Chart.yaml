@@ -10,7 +10,7 @@ sources:
 - https://github.com/Cray-HPE/image-recipes
 dependencies:
 - name: cray-import-kiwi-recipe-image
-  version: 2.0.0
+  version: 2.1.0-20220215202524+dfe8c11
   repository: https://artifactory.algol60.net/artifactory/csm-helm-charts/
 maintainers:
 - name: ecozzi-hpe

@@ -13,3 +13,5 @@ cray-import-kiwi-recipe-image:
     PRODUCT_NAME: "product_name"
     PRODUCT_VERSION: "product_version"
     CREATE_BOS_SESSION_TEMPLATE: "True"
+    IMS_TEMPLATE_DICTIONARY:
+      BAREBONES_VERSION: 8.9.10

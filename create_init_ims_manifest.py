@@ -55,12 +55,12 @@ def create_manifest(files, distro, image_name):
     dict_info = {
         'version': "1.0.0",
         'images': {
-            f'{image_name}': {
+            f'{image_name}-test': {
                 'artifacts': artifact_list
             }
         },
         'recipes': {
-            f'{image_name}': recipe_info
+            f'{image_name}-test': recipe_info
         }
     }
     with open(r'manifest.yaml', 'w') as file:
@@ -91,7 +91,10 @@ def update_recipe_list(recipe, distro):
         },
         'md5': f'{get_md5sum(original_recipe)}',
         'linux_distribution': f'{distro}',
-        'recipe_type': 'kiwi-ng'
+        'recipe_type': 'kiwi-ng',
+        'template_dictionary': {
+            'BAREBONES_VERSION': '{{ BAREBONES_VERSION }}',
+        }
     }
 
     return new_item

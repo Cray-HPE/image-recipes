@@ -56,7 +56,7 @@ chmod 755 root/root/bin/zypper-addrepo.sh
 # Package up the recipe after file templating is complete.
 # 'recipe' must be in the name for it to be captured by the script that creates
 # the import manifest for IMS.
-tar -C $DESC_DIR -zcvf /base/build/output/${IMAGE_NAME}-recipe.tgz --exclude=*.j2  --exclude=scripts *
+tar -C $DESC_DIR -zcvf /base/build/output/${IMAGE_NAME}-recipe.tgz --exclude=*.j2  --exclude=scripts .
 tar -ztvf /base/build/output/${IMAGE_NAME}-recipe.tgz
 
 # Preprocess the Kiwi description config file (for DST pipeline use)
