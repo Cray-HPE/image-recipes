@@ -21,25 +21,9 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-apiVersion: v2
-name: cray-csm-barebones-recipe-install
-version: 0.0.0-recipe
-description: Kubernetes resources for cray-csm-barebones-recipe-install
-keywords:
-- ims
-- kiwi
-home: https://github.com/Cray-HPE/image-recipes
-sources:
-- https://github.com/Cray-HPE/image-recipes
-dependencies:
-- name: cray-import-kiwi-recipe-image
-  version: 2.0.0
-  repository: https://artifactory.algol60.net/artifactory/csm-helm-charts/
-maintainers:
-- name: ecozzi-hpe
-  email: eric.cozzi@hpe.com
-annotations:
-  artifacthub.io/images: |
-    - name: cray-csm-barebones-recipe-install
-      image: artifactory.algol60.net/csm-docker/stable/cray-csm-sles15sp3-barebones-recipe:0.0.0-recipe
-  artifacthub.io/license: MIT
+
+chart-dirs:
+  - kubernetes
+chart-repos:
+  - csm-algol60=https://artifactory.algol60.net/artifactory/csm-helm-charts/
+all: true

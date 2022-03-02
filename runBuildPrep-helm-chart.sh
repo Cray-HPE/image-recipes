@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
-# Copyright 2019-2021 Hewlett Packard Enterprise Development LP
+#
+# MIT License
+#
+# (C) Copyright 2019-2022 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -13,22 +16,20 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 # THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 # OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-# (MIT License)
-
 set -ex
 
 source ./buildPrepHelpers.sh
 source ./vars.sh
 
 # Set the product name and version
-replace_tag_in_file "@product_name@" csm kubernetes/cray-csm-barebones-recipe-install/values.yaml
-replace_tag_in_file "@product_version@" "${CSM_RELEASE_VERSION}" kubernetes/cray-csm-barebones-recipe-install/values.yaml
+replace_tag_in_file "product_name" csm kubernetes/cray-csm-barebones-recipe-install/values.yaml
+replace_tag_in_file "product_version" "${CSM_RELEASE_VERSION}" kubernetes/cray-csm-barebones-recipe-install/values.yaml
 
 # Debug
 cat kubernetes/cray-csm-barebones-recipe-install/values.yaml

@@ -1,6 +1,8 @@
 #!/bin/bash
 #
-# Copyright 2020-2021 Hewlett Packard Enterprise Development LP
+# MIT License
+#
+# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -14,14 +16,11 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 # THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 # OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
-#
-# (MIT License)
-
 #
 # Builds OS Image from the Kiwi recipe and packages recipe as tgz
 #
@@ -30,13 +29,13 @@
 set -ex
 source /base/vars.sh
 
-IMAGE_NAME=cray-shasta-csm-barebones-sles15sp2.x86_64-${IMG_VER}
+IMAGE_NAME=cray-shasta-csm-barebones-sles15sp3.x86_64-${IMG_VER}
 
 # Setup build directories
 mkdir -p /base/build/output /base/build/unpack
 
 # Set the value of the directory of the kiwi description and go there
-DESC_DIR=/base/kiwi-ng/cray-sles15sp2-barebones
+DESC_DIR=/base/kiwi-ng/cray-sles15sp3-barebones
 cd $DESC_DIR
 
 # Preprocess the Kiwi description config file (for on system use)

@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
-# Copyright 2020-2021 Hewlett Packard Enterprise Development LP
+#
+# MIT License
+#
+# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -13,21 +16,19 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 # THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 # OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-# (MIT License)
-
 set -ex
 
 source ./buildPrepHelpers.sh
 source ./vars.sh
 
-# Set the cray-sles15sp2-csm-barebones image version from build time environment variables
-replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" kiwi-ng/cray-sles15sp2-barebones/config-template.xml.j2
+# Set the cray-sles15sp3-csm-barebones image version from build time environment variables
+replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" kiwi-ng/cray-sles15sp3-barebones/config-template.xml.j2
 
-# Set the product version in the Dockerfile_csm-sles15sp2-barebones.image-recipe file
-replace_tag_in_file "@product_version@" "${VERSION}" Dockerfile_csm-sles15sp2-barebones.image-recipe
+# Set the product version in the Dockerfile_csm-sles15sp3-barebones.image-recipe file
+replace_tag_in_file product_version "${VERSION}" Dockerfile_csm-sles15sp3-barebones.image-recipe
