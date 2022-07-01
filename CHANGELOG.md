@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+## [1.5.0] - 2022-07-01
 
-### Changed
+### Added
+- Update ims-load-artifacts to 1.4 to include templated recipe arguments.
 
 [1.4.9] - (no date)
