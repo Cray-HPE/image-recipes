@@ -22,7 +22,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 # Dockerfile for image which holds the CSM barebones image (squashfs) and Kiwi recipe
-FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-imsload as base
+FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-imsload
 
 # Use for testing/not in pipeline builds
 #FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:latest as base
@@ -30,5 +30,5 @@ FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-ims
 # Copy the IMS import manifest
 COPY manifest.yaml /
 
-# Copy the image/recipe files
-COPY build/output/*product_version* /
+# Copy the image/recipe file
+COPY --chown=nobody:nobody build/output/*product_version* /
