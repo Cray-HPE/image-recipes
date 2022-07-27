@@ -26,6 +26,10 @@ export PRODUCT_CSM="csm"
 export PRODUCT_COS="cos"
 export VERSION="csm-1.3"
 
+export SLES_VERSION="15"
+export SLES_SP="SP4"
+export SLES_ARCH="x86_64"
+
 # For developing for a master distribution, use 'master' here.
 # For developing for a release distribution, use product release version
 #  - ${GIT_BRANCH} comes from the Jenkins pipeline
@@ -48,6 +52,9 @@ else
 fi
 
 # Artifact Bloblet Locations for UAN and its dependencies
-export BLOBLET_CSM="http://dst.us.cray.com/dstrepo/bloblets/${PRODUCT_CSM}/${RELEASE_PREFIX}/${CSM_RELEASE_VERSION}"
-export BLOBLET_COS="http://dst.us.cray.com/dstrepo/bloblets/${PRODUCT_COS}/${RELEASE_PREFIX}/${COS_RELEASE_VERSION}"
-export BLOBLET_OS="http://dst.us.cray.com/dstrepo/bloblets/os/dev/mirrors"
+## NOTE: ARTIFACTORY_USER and ARTIFACTORY_TOKEN are defined in the jenkinsfile
+##  by the 'withCredentials' function and passed through the docker call in
+##  the Makefile.
+export BLOBLET_CSM="https://artifactory.algol60.net/artifactory/csm-rpms/hpe/stable/sle-15sp4"
+export BLOBLET_COS="https://arti.hpc.amslabs.hpecorp.net/artifactory/${PRODUCT_COS}-rpm-stable-local/release/${PRODUCT_COS}-${COS_RELEASE_VERSION}"
+export BLOBLET_OS="https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@artifactory.algol60.net/artifactory/sles-mirror"

@@ -26,7 +26,7 @@
 
 @Library('cms-meta-tools') _
 @Library('csm-shared-library') __
-
+def credentialsId = 'artifactory-algol60-readonly'
 pipeline {
     agent {
         label "metal-gcp-builder"
@@ -38,7 +38,7 @@ pipeline {
     }
 
     environment {
-        NAME = "cray-csm-sles15sp3-barebones-recipe"
+        NAME = "cray-csm-sles15sp4-barebones-recipe"
         DESCRIPTION = "Cray System Management (CSM) Barebones Recipes and Images"
         IS_STABLE = getBuildIsStable()
     }
@@ -78,7 +78,11 @@ pipeline {
             parallel {
                 stage('Kiwi Image') {
                     steps {
-                        sh "make kiwi_image"
+                        script {
+                            withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_TOKEN')]) {
+                                sh "make kiwi_image"
+                            }
+                        }
                     }
                 }
 
@@ -101,7 +105,7 @@ pipeline {
             }
             steps {
                 script {
-                    publishCsmDockerImage(image: env.NAME, tag: env.DOCKER_VERSION, isStable: env.IS_STABLE, snykTargetFile: "Dockerfile_csm-sles15sp3-barebones.image-recipe")
+                    publishCsmDockerImage(image: env.NAME, tag: env.DOCKER_VERSION, isStable: env.IS_STABLE, snykTargetFile: "Dockerfile_csm-sles15sp4-barebones.image-recipe")
                     publishCsmHelmCharts(component: env.NAME, chartsPath: "${WORKSPACE}/kubernetes/.packaged", isStable: env.IS_STABLE)
                 }
             }

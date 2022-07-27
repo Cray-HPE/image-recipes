@@ -41,5 +41,5 @@ maintainers:
 annotations:
   artifacthub.io/images: |
     - name: cray-csm-barebones-recipe-install
-      image: artifactory.algol60.net/csm-docker/stable/cray-csm-sles15sp3-barebones-recipe:0.0.0-recipe
+      image: artifactory.algol60.net/csm-docker/stable/cray-csm-sles15sp4-barebones-recipe:0.0.0-recipe
   artifacthub.io/license: MIT

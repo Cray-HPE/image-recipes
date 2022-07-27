@@ -28,7 +28,7 @@
 cray-import-kiwi-recipe-image:
   import_image:
     image:
-      repository: artifactory.algol60.net/csm-docker/stable/cray-csm-sles15sp3-barebones-recipe
+      repository: artifactory.algol60.net/csm-docker/stable/cray-csm-sles15sp4-barebones-recipe
 
   import_job:
     name: "product_name-image-recipe-import-product_version"

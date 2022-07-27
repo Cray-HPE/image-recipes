@@ -37,4 +37,4 @@ also_include_extensions:
 
 # This file has its own non-HPE copyright
 also_exclude_files:
-    - "kiwi-ng/cray-sles15sp3-barebones/config.sh"
+    - "kiwi-ng/cray-sles15sp4-barebones/config.sh"
