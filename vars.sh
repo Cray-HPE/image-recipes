@@ -24,7 +24,7 @@
 
 export PRODUCT_CSM="csm"
 export PRODUCT_COS="cos"
-export VERSION="csm-1.2"
+export VERSION="csm-1.3"
 
 # For developing for a master distribution, use 'master' here.
 # For developing for a release distribution, use product release version
