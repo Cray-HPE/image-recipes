@@ -26,5 +26,5 @@
 
 # But the following
 !/manifest.yaml
-!/build/output/*csm-1.2*
+!/build/output/*csm-1.3*
 !/gitInfo.txt

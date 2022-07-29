@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2022-07-29
+### Changed
+- CASMTRIAGE-3756 - correct built image file permissions.
+- CASMCMS-7970 - ims update cray.dev.com addresses
+
 ## [1.5.0] - 2022-07-01
 
 ### Added
