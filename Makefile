@@ -37,7 +37,7 @@ IMAGE_NAME ?= cray-shasta-csm-sles15sp3-barebones.x86_64
 DISTRO ?= sles15
 
 DOCKERFILE ?= Dockerfile_csm-sles15sp3-barebones.image-recipe
-BUILD_IMAGE ?= arti.dev.cray.com/cos-docker-master-local/cray-kiwi:latest
+BUILD_IMAGE ?= arti.hpc.amslabs.hpecorp.net/cos-docker-master-local/cray-kiwi:latest
 BUILD_SCRIPT ?= runKiwiBuild.sh
 RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp3-barebones
 
@@ -79,6 +79,7 @@ kiwi_build_manifest:
 		${BUILD_IMAGE} \
 		bash -c 'ls -al /build && pwd && python3 create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" ${IMAGE_NAME}-${PRODUCT_VERSION}'
 	cat manifest.yaml
+	ls -la build/output/*
 
 kiwi_docker_image:
 	DOCKER_BUILDKIT=1 docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .

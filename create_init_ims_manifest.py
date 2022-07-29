@@ -27,6 +27,8 @@ import yaml
 import hashlib
 import json
 import re
+import os
+import stat
 
 ARTIFACT_MAPPING = {
     "kernel":          "application/vnd.cray.image.kernel",
@@ -69,6 +71,7 @@ def create_manifest(files, distro, image_name):
 
 def update_artifact_list(artifact, arti_type):
     original_artifact = artifact
+    fix_file_perms(original_artifact)
     artifact = re.sub('^(.*[\\\/])', '', artifact)
     new_item = {
         'link': {
@@ -95,6 +98,19 @@ def update_recipe_list(recipe, distro):
     }
 
     return new_item
+
+
+def fix_file_perms(filename):
+    """
+    Make sure the file is universally readable
+    
+    NOTE: this is required since the build env is running under the root
+    user, but the images that package the artifacts are not.  Make sure
+    all artifacts are publicly readable so the next comsumer can read them.
+    """
+    read_mask = stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH
+    curr_perms = stat.S_IMODE(os.lstat(filename).st_mode)
+    os.chmod(filename, curr_perms | read_mask)
 
 
 def get_md5sum(filename):
