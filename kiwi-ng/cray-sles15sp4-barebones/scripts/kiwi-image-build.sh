@@ -29,13 +29,13 @@
 set -ex
 source /base/vars.sh
 
-IMAGE_NAME=cray-shasta-csm-barebones-sles15sp3.x86_64-${IMG_VER}
+IMAGE_NAME=cray-shasta-csm-barebones-sles15sp4.x86_64-${IMG_VER}
 
 # Setup build directories
 mkdir -p /base/build/output /base/build/unpack
 
 # Set the value of the directory of the kiwi description and go there
-DESC_DIR=/base/kiwi-ng/cray-sles15sp3-barebones
+DESC_DIR=/base/kiwi-ng/cray-sles15sp4-barebones
 cd $DESC_DIR
 
 # Preprocess the Kiwi description config file (for on system use)

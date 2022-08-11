@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2022-08-11
+- CASMCMS-8075 - update the image and recipe to use sles15sp4.
+
 ## [1.6.0] - 2022-07-29
 ### Changed
 - CASMTRIAGE-3756 - correct built image file permissions.

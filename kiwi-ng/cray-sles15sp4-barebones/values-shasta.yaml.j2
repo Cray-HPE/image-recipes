@@ -1,5 +1,5 @@
 # This is a Jinja2 configuration file, used in processing the config-template
-# for use on CJE or the Shasta System.
+# for use on CJE or the SMS.
 #
 # This lists URLs to repositories and groups of repositories.
 #
@@ -19,7 +19,7 @@
 #   ~~~~~~~~~~~~~
 #   1. Changes will not be accepted if any rules are violated.
 #
-#   2. Changes must be tested. That means booting the image as
+#   2. Changes must be tested. That means booting the image on a VM as
 #   the minimum test. If the change could impact operation specific to
 #   Shasta hardware, it must be booted on hardware. What to accept will
 #   be a judgement call by the reviewers.
@@ -39,7 +39,7 @@
 #
 #   Repo Rules
 #   ~~~~~~~~~~
-#   Repos are listed in the values-{cje,shasta}.yaml.j2 files. Repositories
+#   Repos are listed in the values-{cje,sms}.yaml.j2 files. Repositories
 #   must be added to both files.
 #
 #   1. Repos are listed in case insensitive alphabetical order
@@ -79,28 +79,27 @@
 #
 #vim: et sw=4 ts=4
 repos:
- -
-    details: "SUSE SLE15SP3 packages, DST mirror"
-    alias: "sle15-sp3-Module-Basesystem"
-    priority: "4"
-    imageinclude: "true"
-    path: "{{ env.BLOBLET_OS }}/rpms/sles/15-SP3-all/Products/SLE-Module-Basesystem/"
- -
-    details: "SUSE SLE15SP3 packages, DST mirror"
-    alias: "sle15-sp3-Module-Basesystem-Updates"
-    priority: "4"
-    imageinclude: "true"
-    path: "{{ env.BLOBLET_OS }}/rpms/sles/15-SP3-all/Updates/SLE-Module-Basesystem/"
- -
-    details: "SUSE SLE15SP3 packages, internal mirror"
-    alias: "sle15-sp3-Product-SLES"
-    priority: "4"
-    imageinclude: "true"
-    path: "{{ env.BLOBLET_OS }}/rpms/sles/15-SP3-all/Products/SLE-Product-SLES/"
- -
-    details: "SUSE SLE15SP3 packages, DST mirror"
-    alias: "sle15-sp3-Product-SLES-Updates"
-    priority: "4"
-    imageinclude: "true"
-    path: "{{ env.BLOBLET_OS }}/rpms/sles/15-SP3-all/Updates/SLE-Product-SLES/"
 
+-  details: "SUSE SLE15sp4 packages, Nexus repo"
+   alias: "SUSE-SLE-Module-Basesystem-15-sp4-x86_64-Pool"
+   priority: "4"
+   imageinclude: "true"
+   path: "https://packages.local/repository/SUSE-SLE-Module-Basesystem-15-sp4-x86_64-Pool/"
+
+-  details: "SUSE SLE15sp4 packages, Nexus repo"
+   alias: "SUSE-SLE-Module-Basesystem-15-sp4-x86_64-Updates"
+   priority: "4"
+   imageinclude: "true"
+   path: "https://packages.local/repository/SUSE-SLE-Module-Basesystem-15-sp4-x86_64-Updates/"
+
+-  details: "SUSE SLE15sp4 Product packages, Nexus repo"
+   alias: "SUSE-SLE-Product-SLES-15-sp4-x86_64-Pool"
+   priority: "4"
+   imageinclude: "true"
+   path: "https://packages.local/repository/SUSE-SLE-Product-SLES-15-sp4-x86_64-Pool/"
+
+-  details: "SUSE SLE15sp4 Product packages, Nexus repo"
+   alias: "SUSE-SLE-Product-SLES-15-sp4-x86_64-Updates"
+   priority: "4"
+   imageinclude: "true"
+   path: "https://packages.local/repository/SUSE-SLE-Product-SLES-15-sp4-x86_64-Updates/"
