@@ -24,6 +24,6 @@
 #
 # Build the CSM barebones image, this is done in the pipeline, hence the
 # /base directory prefix. See the pipeline definition here:
-#   https://stash.us.cray.com/projects/DST/repos/jenkins-shared-library/browse/vars/kiwiImageRecipeBuildPipeline.groovy
+#   https://github.hpe.com/hpe/hpc-dst-jenkins-shared-library/blob/master/vars/kiwiImageRecipeBuildPipeline.groovy
 
-/base/kiwi-ng/cray-sles15sp3-barebones/scripts/kiwi-image-build.sh
+/base/kiwi-ng/cray-sles15sp4-barebones/scripts/kiwi-image-build.sh

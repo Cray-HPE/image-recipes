@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- CASMCMS-8075 - update the image and recipe to use sles15sp4.
 
 ## [1.6.0] - 2022-07-29
 ### Changed
