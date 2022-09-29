@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- CASMCMS-8252: Enabled building of unstable artifacts
+- CASMCMS-8252: Updated header of update_versions.conf to reflect new tool options
+
+### Fixed
 - Spelling corrections.
+- CASMCMS-8252: Update Chart with correct image and chart version strings during builds.
 
 ## [1.7.0] - 2022-08-11
 - CASMCMS-8075 - update the image and recipe to use sles15sp4.
