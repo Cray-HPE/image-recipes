@@ -30,5 +30,5 @@ FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-ims
 # Copy the IMS import manifest
 COPY manifest.yaml /
 
-# Copy the image/recipe files
-COPY build/output/*product_version* /
+# Copy the image/recipe file
+COPY --chown=nobody:nobody build/output/*product_version* /
