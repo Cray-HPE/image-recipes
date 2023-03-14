@@ -39,7 +39,7 @@ then
     export CSM_RELEASE_VERSION="master"
     export COS_RELEASE_VERSION="master"
 else
-    export CSM_RELEASE_VERSION="1.5"
+    export CSM_RELEASE_VERSION="1.4"
     export COS_RELEASE_VERSION="2.2"
 fi
 
@@ -55,6 +55,6 @@ fi
 ## NOTE: ARTIFACTORY_USER and ARTIFACTORY_TOKEN are defined in the jenkinsfile
 ##  by the 'withCredentials' function and passed through the docker call in
 ##  the Makefile.
-export BLOBLET_CSM="https://artifactory.algol60.net/artifactory/csm-rpms/hpe/stable/sle-15sp4"
+export BLOBLET_CSM="https://arti.hpc.amslabs.hpecorp.net/artifactory/csm-rpms-remote/hpe/stable/sle-15sp4"
 export BLOBLET_COS="https://arti.hpc.amslabs.hpecorp.net/artifactory/${PRODUCT_COS}-rpm-stable-local/release/${PRODUCT_COS}-${COS_RELEASE_VERSION}"
 export BLOBLET_OS="https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@artifactory.algol60.net/artifactory/sles-mirror"
