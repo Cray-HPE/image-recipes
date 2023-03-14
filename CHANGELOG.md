@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CASMCMS-8252: Enabled building of unstable artifacts
 - CASMCMS-8252: Updated header of update_versions.conf to reflect new tool options
 - CASMCMS-8463: Use ims-load-artifacts version 2.2
+- CASMCMS-8465: Use artifactory remote mirrors to avoid authentication issues
 
 ### Fixed
 - Spelling corrections.
