@@ -39,7 +39,7 @@ then
     export CSM_RELEASE_VERSION="master"
     export COS_RELEASE_VERSION="master"
 else
-    export CSM_RELEASE_VERSION="1.4"
+    export CSM_RELEASE_VERSION="1.5"
     export COS_RELEASE_VERSION="2.2"
 fi
 
