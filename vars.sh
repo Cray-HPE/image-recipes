@@ -27,7 +27,8 @@ export PRODUCT_COS="cos"
 export VERSION="csm-1.4"
 
 export SLES_VERSION="15"
-export SLES_SP="SP4"
+export SLES_SPNUM=4
+export SLES_SP="SP${SLES_SPNUM}"
 export SLES_ARCH="x86_64"
 
 # For developing for a master distribution, use 'master' here.
@@ -55,6 +56,6 @@ fi
 ## NOTE: ARTIFACTORY_USER and ARTIFACTORY_TOKEN are defined in the jenkinsfile
 ##  by the 'withCredentials' function and passed through the docker call in
 ##  the Makefile.
-export BLOBLET_CSM="https://arti.hpc.amslabs.hpecorp.net/artifactory/csm-rpms-remote/hpe/stable/sle-15sp4"
+export BLOBLET_CSM="https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@artifactory.algol60.net/artifactory/csm-rpms/hpe/stable/sle-${SLES_VERSION}sp${SLES_SPNUM}"
 export BLOBLET_COS="https://arti.hpc.amslabs.hpecorp.net/artifactory/${PRODUCT_COS}-rpm-stable-local/release/${PRODUCT_COS}-${COS_RELEASE_VERSION}"
 export BLOBLET_OS="https://${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN}@artifactory.algol60.net/artifactory/sles-mirror"
