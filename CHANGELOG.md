@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.4] - 2023-03-17
+### Changed
+- CASMCMS-8472: Build using artifactory authentication instead of unauthenticated mirrors, where possible
+
 ## [1.7.3] - 2023-03-14
 ### Changed
 - CASMCMS-8252: Enabled building of unstable artifacts
