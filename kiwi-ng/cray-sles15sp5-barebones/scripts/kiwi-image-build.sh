@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2023 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -26,16 +26,29 @@
 #
 # Artifacts that will be packaged up should be placed in /base/build/output
 
+# HERE - make sure the following are set:
+# SLES_VERSION (ie 15)
+# SLES_SP (ie sp5)
+
+export ARCH=x86_64
+export SLES_ARCH="x86_64"
+if [ $BUILD_ARCH = 'aarch64' ];
+then
+    export ARCH=amd64
+    export SLES_ARCH="aarch64"
+fi
+echo "BUILD_ARCH=${BUILD_ARCH}, ARCH=${ARCH}"
+
 set -ex
 source /base/vars.sh
 
-IMAGE_NAME=cray-shasta-csm-barebones-sles15sp4.x86_64-${IMG_VER}
+IMAGE_NAME=cray-shasta-csm-barebones-sles${SLES_VERSION}${SLES_SP}.${ARCH}-${IMG_VER}
 
 # Setup build directories
 mkdir -p /base/build/output /base/build/unpack
 
 # Set the value of the directory of the kiwi description and go there
-DESC_DIR=/base/kiwi-ng/cray-sles15sp4-barebones
+DESC_DIR=/base/kiwi-ng/cray-sles${SLES_VERSION}${SLES_SP,,}-barebones
 cd $DESC_DIR
 
 # Preprocess the Kiwi description config file (for on system use)
@@ -57,29 +70,35 @@ chmod 755 root/root/bin/zypper-addrepo.sh
 # the import manifest for IMS.
 tar -C $DESC_DIR -zcvf /base/build/output/${IMAGE_NAME}-recipe.tgz --exclude=*.j2  --exclude=scripts *
 tar -ztvf /base/build/output/${IMAGE_NAME}-recipe.tgz
+echo "Outputting recipe: /base/build/output/${IMAGE_NAME}-recipe.tgz"
 
-# Preprocess the Kiwi description config file (for DST pipeline use)
-rm config.xml
-scripts/config-process.py \
-    --input config-template.xml.j2 \
-    --output config.xml \
-    values-cje.yaml.j2
+# Only build the image if this is for x86_64
+if [ $BUILD_ARCH = 'x86_64' ];
+then
+    # Preprocess the Kiwi description config file (for DST pipeline use)
+    rm config.xml
+    scripts/config-process.py \
+        --input config-template.xml.j2 \
+        --output config.xml \
+        values-cje.yaml.j2
 
-# Build OS image with Kiwi NG (add --debug for lots 'o output)
-time /usr/bin/kiwi-ng --debug --type tbz system build --description $DESC_DIR --target-dir /build/output
+    # Build OS image with Kiwi NG (add --debug for lots 'o output)
+    echo "Building x86_64 image..."
+    time /usr/bin/kiwi-ng --debug --type tbz system build --description $DESC_DIR --target-dir /build/output
 
-# Build squashfs from OS image tarball and place in /base/build/output for
-# packaging in later pipeline steps.
-cd /base/build/unpack
-TARBALL=$(echo /build/output/*.tar.xz)
-time tar --extract --xz --numeric --file $TARBALL
-time mksquashfs . ${IMAGE_NAME}.squashfs -comp xz -no-progress
-cp ${IMAGE_NAME}.squashfs /base/build/output/
+    # Build squashfs from OS image tarball and place in /base/build/output for
+    # packaging in later pipeline steps.
+    cd /base/build/unpack
+    TARBALL=$(echo /build/output/*.tar.xz)
+    time tar --extract --xz --numeric --file $TARBALL
+    time mksquashfs . ${IMAGE_NAME}.squashfs -comp xz -no-progress
+    cp ${IMAGE_NAME}.squashfs /base/build/output/
 
-# Copy kernel and initrd to output directory
-cp boot/initrd  /base/build/output/${IMAGE_NAME}.initrd
-cp boot/vmlinuz /base/build/output/${IMAGE_NAME}.vmlinuz
+    # Copy kernel and initrd to output directory
+    cp boot/initrd  /base/build/output/${IMAGE_NAME}.initrd
+    cp boot/vmlinuz /base/build/output/${IMAGE_NAME}.vmlinuz
 
-# We don't need to deliver the tar.xz version. Remove it to
-# save space in the docker image that delivers the image to the system.
-rm /base/build/output/*.tar.xz
+    # We don't need to deliver the tar.xz version. Remove it to
+    # save space in the docker image that delivers the image to the system.
+    rm /base/build/output/*.tar.xz
+fi

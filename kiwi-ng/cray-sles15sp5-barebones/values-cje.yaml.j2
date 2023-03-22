@@ -80,26 +80,50 @@
 #vim: et sw=4 ts=4
 repos:
  -
-    details: "SUSE SLE15sp4 packages, DST mirror"
-    alias: "sle15-sp4-Module-Basesystem"
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, DST mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Module-Basesystem"
     priority: "4"
     imageinclude: "true"
     path: "{{ env.BLOBLET_OS }}/Products/SLE-Module-Basesystem/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/product?auth=basic"
  -
-    details: "SUSE SLE15sp4 packages, DST mirror"
-    alias: "sle15-sp4-Module-Basesystem-Updates"
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, DST mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Module-Basesystem-Updates"
     priority: "4"
     imageinclude: "true"
     path: "{{ env.BLOBLET_OS }}/Updates/SLE-Module-Basesystem/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/update?auth=basic"
  -
-    details: "SUSE SLE15sp4 packages, internal mirror"
-    alias: "sle15-sp4-Product-SLES"
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, internal mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Product-SLES"
     priority: "4"
     imageinclude: "true"
     path: "{{ env.BLOBLET_OS }}/Products/SLE-Product-SLES/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/product?auth=basic"
  -
-    details: "SUSE SLE15sp4 packages, internal mirror"
-    alias: "sle15-sp4-Product-SLES-Updates"
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, internal mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Product-SLES-Updates"
     priority: "4"
     imageinclude: "true"
     path: "{{ env.BLOBLET_OS }}/Updates/SLE-Product-SLES/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/update?auth=basic"
+ -
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, internal mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Module-HPC"
+    priority: "4"
+    imageinclude: "true"
+    path: "{{ env.BLOBLET_OS }}/Products/SLE-Module-HPC/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/product?auth=basic"
+ -
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, internal mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Module-HPC-Updates"
+    priority: "4"
+    imageinclude: "true"
+    path: "{{ env.BLOBLET_OS }}/Updates/SLE-Module-HPC/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/update?auth=basic"
+ -
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, internal mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Module-Server-Applications-SLES"
+    priority: "4"
+    imageinclude: "true"
+    path: "{{ env.BLOBLET_OS }}/Products/SLE-Module-Server-Applications/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/product?auth=basic"
+ -
+    details: "SUSE SLE{{ env.SLES_VERSION }}{{ env.SLES_SP }} packages, internal mirror"
+    alias: "sle{{ env.SLES_VERSION }}-{{ env.SLES_SP }}-Module-Server-Applications-SLES-Updates"
+    priority: "4"
+    imageinclude: "true"
+    path: "{{ env.BLOBLET_OS }}/Updates/SLE-Module-Server-Applications/{{ env.SLES_VERSION }}-{{ env.SLES_SP }}/{{ env.SLES_ARCH }}/update?auth=basic"

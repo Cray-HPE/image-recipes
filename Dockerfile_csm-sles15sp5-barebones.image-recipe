@@ -21,10 +21,20 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-# Ignore everything
-**
+# Dockerfile for image which holds the CSM barebones image (squashfs) and Kiwi recipe
+FROM artifactory.algol60.net/csm-docker/unstable/cray-ims-load-artifacts:2.6.0-CASMCMS-8459-v2.3_e863f51 as base
 
-# But the following
-!/manifest.yaml
-!/build/output/*csm-1.4*
-!/gitInfo.txt
+# Use for testing/not in pipeline builds
+#FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:latest as base
+
+# Copy the IMS import manifest
+COPY manifest.yaml /
+
+# Copy the image/recipe file
+RUN ls -la /
+RUN ls -la /home
+RUN ls -la /home/jenkins
+RUN ls -la /home/jenkins/workspace
+RUN ls -la /home/jenkins/workspace/y-HPE_image-recipes_CASMCMS-8459
+
+COPY --chown=nobody:nobody build/output/*product_version* /

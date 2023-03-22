@@ -27,8 +27,8 @@ set -ex
 source ./buildPrepHelpers.sh
 source ./vars.sh
 
-# Set the cray-sles15sp4-csm-barebones image version from build time environment variables
-replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" kiwi-ng/cray-sles15sp4-barebones/config-template.xml.j2
+# Set the cray-sles15sp5-csm-barebones image version from build time environment variables
+replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" kiwi-ng/cray-sles15sp5-barebones/config-template.xml.j2
 
-# Set the product version in the Dockerfile_csm-sles15sp4-barebones.image-recipe file
-replace_tag_in_file product_version "${VERSION}" Dockerfile_csm-sles15sp4-barebones.image-recipe
+# Set the product version in the Dockerfile_csm-sles15sp5-barebones.image-recipe file
+replace_tag_in_file product_version "${VERSION}" Dockerfile_csm-sles15sp5-barebones.image-recipe

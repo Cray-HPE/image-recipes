@@ -38,7 +38,7 @@ pipeline {
     }
 
     environment {
-        NAME = "cray-csm-sles15sp4-barebones-recipe"
+        NAME = "cray-csm-sles15sp5-barebones-recipe"
         DESCRIPTION = "Cray System Management (CSM) Barebones Recipes and Images"
         IS_STABLE = getBuildIsStable()
     }
@@ -107,7 +107,7 @@ pipeline {
             }
             steps {
                 script {
-                    publishCsmDockerImage(image: env.NAME, tag: env.DOCKER_VERSION, isStable: env.IS_STABLE, snykTargetFile: "Dockerfile_csm-sles15sp4-barebones.image-recipe")
+                    publishCsmDockerImage(image: env.NAME, tag: env.DOCKER_VERSION, isStable: env.IS_STABLE, snykTargetFile: "Dockerfile_csm-sles15sp5-barebones.image-recipe")
                     publishCsmHelmCharts(component: env.NAME, chartsPath: "${WORKSPACE}/kubernetes/.packaged", isStable: env.IS_STABLE)
                 }
             }

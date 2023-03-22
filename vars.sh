@@ -24,12 +24,11 @@
 
 export PRODUCT_CSM="csm"
 export PRODUCT_COS="cos"
-export VERSION="csm-1.4"
+export VERSION="csm-1.5"
 
 export SLES_VERSION="15"
-export SLES_SPNUM=4
+export SLES_SPNUM=5
 export SLES_SP="SP${SLES_SPNUM}"
-export SLES_ARCH="x86_64"
 
 # For developing for a master distribution, use 'master' here.
 # For developing for a release distribution, use product release version
@@ -40,8 +39,8 @@ then
     export CSM_RELEASE_VERSION="master"
     export COS_RELEASE_VERSION="master"
 else
-    export CSM_RELEASE_VERSION="1.4"
-    export COS_RELEASE_VERSION="2.2"
+    export CSM_RELEASE_VERSION="1.5"
+    export COS_RELEASE_VERSION="2.6"
 fi
 
 # DST prefixes in bloblet locations

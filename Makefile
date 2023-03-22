@@ -23,7 +23,7 @@
 #
 # MIT License
 
-NAME ?= cray-csm-sles15sp4-barebones-recipe
+NAME ?= cray-csm-sles15sp5-barebones-recipe
 DOCKER_VERSION ?= $(shell head -1 .docker_version)
 CHART_VERSION ?= $(shell head -1 .chart_version)
 
@@ -33,13 +33,15 @@ GIT_BRANCH ?= local
 GIT_TAG ?= $(shell git rev-parse --short HEAD)
 IMG_VER ?= ${PRODUCT_VERSION}-${BUILD_DATE}-g${GIT_TAG}
 
-IMAGE_NAME ?= cray-shasta-csm-sles15sp4-barebones.x86_64
+IMAGE_NAME ?= cray-shasta-csm-sles15sp5-barebones
 DISTRO ?= sles15
+ARCH ?= x86_64
+REQUIRE_DKMS ?= True
 
-DOCKERFILE ?= Dockerfile_csm-sles15sp4-barebones.image-recipe
+DOCKERFILE ?= Dockerfile_csm-sles15sp5-barebones.image-recipe
 BUILD_IMAGE ?= arti.hpc.amslabs.hpecorp.net/cos-docker-master-local/cray-kiwi:latest
 BUILD_SCRIPT ?= runKiwiBuild.sh
-RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp4-barebones
+RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp5-barebones
 
 CHART_NAME ?= cray-csm-barebones-recipe-install
 CHART_PATH ?= kubernetes
@@ -56,19 +58,30 @@ lint:
 	./cms_meta_tools/scripts/runLint.sh
 
 kiwi_build_prep:
+	# or is this the one that builds the recipe??? Need to look...
 	docker run -v ${PWD}:/base \
 		${BUILD_IMAGE}
 		rm -rf /base/build
 	./runBuildPrep-image-recipe.sh
 
 kiwi_build_image:
+	# build x86 recipe and image
 	docker run --rm --privileged \
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
 		-e IMG_VER=${IMG_VER} -e BUILD_DATE=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
 		-e ARTIFACTORY_USER=${ARTIFACTORY_USER} -e ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} \
-		-v ${PWD}/build:/build -v ${PWD}:/base \
+		-e BUILD_ARCH="x86_64" -v ${PWD}/build:/build -v ${PWD}:/base \
 		${BUILD_IMAGE} \
 		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
+
+	# build aarch64 recipe only
+	#docker run --rm --privileged \
+	#	-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
+	#	-e IMG_VER=${IMG_VER} -e BUILD_DATE=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
+	#	-e ARTIFACTORY_USER=${ARTIFACTORY_USER} -e ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} \
+	#	-e BUILD_ARCH="aarch64" -v ${PWD}/build:/build -v ${PWD}:/base \
+	#	${BUILD_IMAGE} \
+	#	/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
 
 kiwi_build_manifest:
 	$(eval FILES := $(shell find build/output/* -maxdepth 0 | tr '\r\n' ' ' ))
@@ -78,12 +91,15 @@ kiwi_build_manifest:
 		-v ${PWD}/build:/build -v ${PWD}:/root \
 		--workdir /root \
 		${BUILD_IMAGE} \
-		bash -c 'ls -al /build && pwd && python3 create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" ${IMAGE_NAME}-${PRODUCT_VERSION}'
+		bash -c 'ls -al /build && pwd && python3 create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --arch "${ARCH}" --require-dkms "${REQUIRE_DKMS}" ${IMAGE_NAME}-${PRODUCT_VERSION}'
 	cat manifest.yaml
 	ls -la build/output/*
 
 kiwi_docker_image:
-	DOCKER_BUILDKIT=1 docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .
+	pwd
+	ls -la build/output/*
+	docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .
+	#DOCKER_BUILDKIT=1 docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .
 
 chart_setup:
 	mkdir -p ${CHART_PATH}/.packaged
