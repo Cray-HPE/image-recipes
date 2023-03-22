@@ -29,6 +29,7 @@ import json
 import re
 import os
 import stat
+import sys
 
 ARTIFACT_MAPPING = {
     "kernel":          "application/vnd.cray.image.kernel",
@@ -42,13 +43,23 @@ ARTIFACT_MAPPING = {
 artifact_list = []
 
 
-def create_manifest(files, distro, image_name):
+def create_manifest(files, distro, image_name, arch, require_dkms):
+    # NOTE:
+    # There are limitations to the inputs on this:
+    # 1) All recipes must have 'recipe' in the name
+    # 2) It is assumed there is just one recipe in the manifest
+    # 3) All other files are assumed to be images in one boot package
+    
+    # Changes:
+    # - allow more than one recipe
+    # - pull arch from the name for images and recipes?
+    
     global artifact_list
     recipe_info = {}
     for f_name in files:
         # Not a fan of this next line, still thinking.
         if "recipe" in f_name:
-            recipe_info = update_recipe_list(f_name, distro)
+            recipe_info = update_recipe_list(f_name, distro, arch, require_dkms)
             continue
         for key, value in ARTIFACT_MAPPING.items():
             if key in f_name:
@@ -84,7 +95,7 @@ def update_artifact_list(artifact, arti_type):
     return new_item
 
 
-def update_recipe_list(recipe, distro):
+def update_recipe_list(recipe, distro, arch, require_dkms):
     original_recipe = recipe
     recipe = re.sub('^(.*[\\\/])', '', recipe)
     new_item = {
@@ -94,7 +105,9 @@ def update_recipe_list(recipe, distro):
         },
         'md5': f'{get_md5sum(original_recipe)}',
         'linux_distribution': f'{distro}',
-        'recipe_type': 'kiwi-ng'
+        'recipe_type': 'kiwi-ng',
+        'arch': f'{arch}',
+        'require_dkms': require_dkms
     }
 
     return new_item
@@ -128,14 +141,23 @@ def create_arg_parser():
                         help='Name of the kiwi image and kiwi recipe.')
     parser.add_argument('--files', type=str, help='List of files to update the manifest file with.')
     parser.add_argument('--distro', type=str, help='Distribution type.')
+    parser.add_argument('--arch', type=str, default='x86_64', help='arch: x86_64 or aarch64')
+    parser.add_argument('--require-dkms', type=bool, default=False, help='If dkms is required to be enabled')
     args = parser.parse_args()
     args.files = list(args.files.split())
 
     return args
 
 def main():
+    print(sys.argv)
     args = create_arg_parser()
-    create_manifest(args.files, args.distro, args.image_name)
+    print(f"files: {args.files}")
+    print(f"distro: {args.distro}")
+    print(f"image: {args.image_name}")
+    print(f"arch: {args.arch}")
+    print(f"dkms: {args.require_dkms}")
+    
+    create_manifest(args.files, args.distro, args.image_name, arch=args.arch, require_dkms=args.require_dkms)
 
 if __name__ == '__main__':
     main()

@@ -23,7 +23,7 @@
 
 set -ex
 
-{% for repo in values['repos'] %}
+{% for repo in repos %}
 {% if repo['imageinclude'] == 'true' %}
 zypper addrepo --priority {{ repo['priority'] }} {{ repo['path'] }} {{ repo['alias'] }}
 {% endif %}
