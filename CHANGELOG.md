@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2023-04-06
+
+### Changed
+
 - Update to use update_external_version to get latest patch version of base chart
 - Update chart maintainers
 - CASMTRIAGE-5163: Change to version 3.2 of the base chart (cray-import-kiwi-recipe-image)
