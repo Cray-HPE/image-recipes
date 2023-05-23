@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2023-05-23
+
+### Changed
+
+- CASMCMS-7922: Use version 2.5 of cray-ims-load-artifacts and version 4.0 of cray-import-kiwi-recipe-image, in
+  order to create BOS session templates using BOS v2.
+
 ## [1.10.0] - 2023-05-23
 
 ### Changed
