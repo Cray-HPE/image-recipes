@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.0] - 2023-05-23
+
+### Changed
+
+- CASMCMS-8646: Use version 2.4 of cray-ims-load-artifacts
+
 ## [1.9.0] - 2023-04-26
 
 ### Changed
