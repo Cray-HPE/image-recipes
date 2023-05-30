@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2019-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2019-2023 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -23,7 +23,7 @@
 #
 # MIT License
 
-NAME ?= cray-csm-sles15sp4-barebones-recipe
+NAME ?= cray-csm-sles15sp5-barebones-recipe
 DOCKER_VERSION ?= $(shell head -1 .docker_version)
 CHART_VERSION ?= $(shell head -1 .chart_version)
 
@@ -33,13 +33,13 @@ GIT_BRANCH ?= local
 GIT_TAG ?= $(shell git rev-parse --short HEAD)
 IMG_VER ?= ${PRODUCT_VERSION}-${BUILD_DATE}-g${GIT_TAG}
 
-IMAGE_NAME ?= cray-shasta-csm-sles15sp4-barebones.x86_64
+IMAGE_NAME ?= cray-shasta-csm-sles15sp5-barebones
 DISTRO ?= sles15
 
-DOCKERFILE ?= Dockerfile_csm-sles15sp4-barebones.image-recipe
+DOCKERFILE ?= Dockerfile_csm-sles15sp5-barebones.image-recipe
 BUILD_IMAGE ?= arti.hpc.amslabs.hpecorp.net/cos-docker-master-local/cray-kiwi:latest
 BUILD_SCRIPT ?= runKiwiBuild.sh
-RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp4-barebones
+RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp5-barebones
 
 CHART_NAME ?= cray-csm-barebones-recipe-install
 CHART_PATH ?= kubernetes
@@ -66,7 +66,16 @@ kiwi_build_image:
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
 		-e IMG_VER=${IMG_VER} -e BUILD_DATE=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
 		-e ARTIFACTORY_USER=${ARTIFACTORY_USER} -e ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} \
-		-v ${PWD}/build:/build -v ${PWD}:/base \
+		-e BUILD_ARCH="x86_64" -v ${PWD}/build:/build -v ${PWD}:/base \
+		${BUILD_IMAGE} \
+		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
+
+	# build aarch64 recipe only
+	docker run --rm --privileged \
+		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
+		-e IMG_VER=${IMG_VER} -e BUILD_DATE=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
+		-e ARTIFACTORY_USER=${ARTIFACTORY_USER} -e ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} \
+		-e BUILD_ARCH="aarch64" -v ${PWD}/build:/build -v ${PWD}:/base \
 		${BUILD_IMAGE} \
 		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
 

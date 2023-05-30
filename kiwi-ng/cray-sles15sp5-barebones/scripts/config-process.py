@@ -29,6 +29,7 @@ import os
 import sys
 
 import argparse
+from pprint import pprint
 from jinja2 import Environment, FileSystemLoader, Template
 import yaml
 
@@ -39,7 +40,6 @@ parser.add_argument('-o', '--output')
 parser.add_argument('values_file')
 args = parser.parse_args(sys.argv[1:])
 
-env = Environment(loader=FileSystemLoader('./'))
 
 # Seed the template rendering values with the environment variables
 values = {"env": os.environ}
@@ -51,14 +51,19 @@ with open(args.values_file, 'r') as data:
 repos = []
 for repo in values['repos']:
     repo["path"] = Template(repo["path"]).render(**values)
+    repo["alias"] = Template(repo["alias"]).render(**values)
+    repo["details"] = Template(repo["details"]).render(**values)
     repos.append(repo)
-    from pprint import pprint
     pprint(repo)
 
+# Replace the repos in the values dictionary
 values['repos'] = repos
+
+# Load the template file
+env = Environment(loader=FileSystemLoader('./'))
 template = env.get_template(args.input)
 
 # Generate output file
 with open(args.output, 'w') as output:
-    output.write(template.render(values=values))
+    output.write(template.render(**values))
     output.write('\n')

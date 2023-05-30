@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<image schemaversion="6.8" name="cray-sles15sp4-barebones">
+<image schemaversion="6.8" name="cray-sles{{ env.SLES_VERSION }}{{ env.SLES_SP_LOWER }}-{{ env.SLES_ARCH }}-barebones">
     <description type="system">
         <author>Cray Inc</author>
         <contact>sps@cray.com</contact>
         <specification>
-            Barebones SLES15sp4 Recipe
+            Barebones SLES{{ env.SLES_VERSION }}{{ env.SLES_SP_LOWER }}-{{ env.SLES_ARCH }} Recipe
         </specification>
     </description>
 
@@ -60,7 +60,7 @@
     Repositories are added dynamically based on if the build is being done in the
     pipeline (CJE) or on the Shasta system (Shasta)
     -->
-    {% for repo in values['repos'] %}
+    {% for repo in repos %}
         <!-- {{ repo['details'] }} -->
         <repository type="rpm-md" alias="{{ repo['alias'] }}" priority="{{ repo['priority'] }}" imageinclude="{{ repo['imageinclude'] }}">
             <source path="{{ repo['path'] }}"/>
@@ -68,40 +68,74 @@
     {% endfor %}
 
     <packages type="image">
-        <package name="checkmedia"/>
-        <package name="grub2-branding-SLE"/>
-        <package name="iputils"/>
-        <package name="vim"/>
-        <package name="grub2"/>
-        <package name="grub2-x86_64-efi" arch="x86_64"/>
-        <package name="grub2-i386-pc"/>
-        <package name="syslinux"/>
-        <package name="lvm2"/>
-        <package name="fontconfig"/>
-        <package name="fonts-config"/>
-        <package name="tar"/>
-        <package name="parted"/>
-        <package name="openssh"/>
-        <package name="iproute2"/>
-        <package name="less"/>
-        <package name="bash-completion"/>
-        <package name="dhcp-client"/>
-        <package name="which"/>
-        <package name="shim"/>
-        <package name="kernel-default"/>
-        <package name="timezone"/>
+        <package name="at"/>
         <package name="bash"/>
+        <package name="bash-completion"/>
         <package name="bc"/>
+        <package name="bind-utils"/>
         <package name="binutils"/>
+        <package name="biosdevname" arch="x86_64"/>
+        <package name="checkmedia"/>
+        <package name="cron"/>
+        <package name="chrony"/>
+        <package name="cryptsetup"/>
         <package name="cmake"/>
         <package name="cpupower"/>
         <package name="curl"/>
         <package name="device-mapper"/>
+        <package name="dhcp-client"/>
         <package name="dmidecode"/>
+        <package name="dosfstools"/>
+        <package name="dump"/>
         <package name="e2fsprogs"/>
+        <package name="ebtables"/>
+        <package name="elfutils-lang"/>
+        <package name="elfutils"/>
+        <package name="ethtool"/>
+        <package name="expect"/>
         <package name="file"/>
         <package name="filesystem"/>
+        <package name="fping"/>
+        <package name="fuse"/>
+        <package name="fontconfig"/>
+        <package name="fonts-config"/>
+        <package name="grub2"/>
+        <package name="grub2-branding-SLE"/>
+        <package name="grub2-arm64-efi" arch="aarch64"/>
+        <package name="grub2-x86_64-efi" arch="x86_64"/>
+        <package name="grub2-i386-pc" arch="x86_64"/>
+        <package name="hdparm"/>
+        <package name="hwloc"/>
+        <package name="iproute2"/>
+        <package name="iputils"/>
+        <package name="kernel-default"/>
+        <package name="ledmon"/>
+        <package name="less"/>
+        <package name="libasm1"/>
+        <package name="lshw" arch="x86_64"/>
+        <package name="lvm2"/>
+        <package name="mdadm"/>
+        <package name="mtools"/>
+        <package name="nvme-cli"/>
+        <package name="openscap"/>
+        <package name="openscap-utils"/>
+        <package name="openssh"/>
+        <package name="parted"/>
+        <package name="pciutils"/>
+        <package name="pixz"/>
+        <package name="rsync"/>
+        <package name="shim"/>
+        <package name="squashfs"/>
+        <package name="tar"/>
+        <package name="tcpdump"/>
         <package name="timezone"/>
+        <package name="tpm2.0-abrmd"/>
+        <package name="tpm2.0-tools"/>
+        <package name="traceroute"/>
+        <package name="vim"/>
+        <package name="which"/>
+        <package name="xfsprogs"/>
+        <package name="xorriso"/>
     </packages>
     <packages type="bootstrap">
         <package name="udev"/>

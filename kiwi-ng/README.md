@@ -1,16 +1,16 @@
-# Sles12sp4 Barebones Recipe
+# Sles12sp5 Barebones Recipe
 
 ## Building
 
 Build your image using the [ims build container](https://github.com/Cray-HPE/ims) 
 or manually using kiwi-ng as shown below.
 
-    $ sudo kiwi-ng --type tbz system build --description /image-recipes/kiwi-ng/cray-sles12sp4-barebones --target /tmp/image-root/
+    $ sudo kiwi-ng --type tbz system build --description /image-recipes/kiwi-ng/cray-sles12sp5-barebones --target /tmp/image-root/
     ...
-    [ INFO    ]: 11:36:00 | --> image_packages: /tmp/image-root/cray-sles12sp4-barebones.x86_64-1.0.0.packages
-    [ INFO    ]: 11:36:00 | --> image_verified: /tmp/image-root/cray-sles12sp4-barebones.x86_64-1.0.0.verified
-    [ INFO    ]: 11:36:00 | --> root_archive: /tmp/image-root/cray-sles12sp4-barebones.x86_64-1.0.0.tar.xz
-    [ INFO    ]: 11:36:00 | --> root_archive_md5: /tmp/image-root/cray-sles12sp4-barebones.x86_64-1.0.0.md5
+    [ INFO    ]: 11:36:00 | --> image_packages: /tmp/image-root/cray-sles12sp5-barebones.x86_64-1.0.0.packages
+    [ INFO    ]: 11:36:00 | --> image_verified: /tmp/image-root/cray-sles12sp5-barebones.x86_64-1.0.0.verified
+    [ INFO    ]: 11:36:00 | --> root_archive: /tmp/image-root/cray-sles12sp5-barebones.x86_64-1.0.0.tar.xz
+    [ INFO    ]: 11:36:00 | --> root_archive_md5: /tmp/image-root/cray-sles12sp5-barebones.x86_64-1.0.0.md5
 
 ## Populate NFS Root File System share
 
@@ -24,14 +24,14 @@ See the Q2 Demo Script for procedures to setup NFS.
 Untar the archive into an appropriately named subdirectory under /var/lib/nfsroot
 
 
-    # tar xf cray-sles12sp4-barebones.x86_64-1.0.0.tar.xz  -C /var/lib/nfsroot/cmp1_barebones_image
+    # tar xf cray-sles12sp5-barebones.x86_64-1.0.0.tar.xz  -C /var/lib/nfsroot/cmp1_barebones_image
 
 Add to the /etc/exports file your NFS directory you will be mounting on the compute node using the above path:
 
 
     # cat /etc/exports
     ...
-    /var/lib/nfsroot/cmp1_sles12sp4_image/ *(rw,sync,no_root_squash,no_subtree_check)
+    /var/lib/nfsroot/cmp1_sles12sp5_image/ *(rw,sync,no_root_squash,no_subtree_check)
     
     
 "exportfs -a" will add your new directory to available exports
@@ -64,7 +64,7 @@ Powercycle the node and watch the console log.
 
     $ ipmitool -Ilanplus -H cmp1-bmc.squirt.next.cray.com -U root -P <image-root-password> sol activate
     ...
-    Welcome to SUSE Linux Enterprise Server 12 sp4  (x86_64) - Kernel 4.4.143-94.47-default (ttyS0).
+    Welcome to SUSE Linux Enterprise Server 12 sp5  (x86_64) - Kernel 4.4.143-94.47-default (ttyS0).
 
     linux login: root
     Password:
@@ -74,7 +74,7 @@ Powercycle the node and watch the console log.
     
     You have logged into a Cray Barebones Image
     
-    This node is running SLES 12sp4 SuSE Linux System.
+    This node is running SLES 12sp5 SuSE Linux System.
     
     Please contact your IT system admin for any support requests.
     
