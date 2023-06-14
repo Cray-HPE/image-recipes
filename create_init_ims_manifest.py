@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2023 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -25,12 +25,12 @@
 import argparse
 import yaml
 import hashlib
-import json
 import re
 import os
 import stat
 
 ARTIFACT_MAPPING = {
+    "Image":           "application/vnd.cray.image.kernel",
     "kernel":          "application/vnd.cray.image.kernel",
     "vmlinuz":         "application/vnd.cray.image.kernel",
     "initrd":          "application/vnd.cray.image.initrd",
@@ -39,32 +39,48 @@ ARTIFACT_MAPPING = {
     "boot_parameters": "application/vnd.cray.image.parameters.boot",
 }
 
-artifact_list = []
-
-
 def create_manifest(files, distro, image_name):
-    global artifact_list
-    recipe_info = {}
+    # Process the file list building up recipe info and image artifacts
+    # NOTE - for the time being, this is assuming possible multipe
+    # recipes (same recipe, different arch versions) and one pre-built image
+    artifact_list = []
+    recipe_list = []
     for f_name in files:
+        print(f"Processing {f_name}")
         # Not a fan of this next line, still thinking.
         if "recipe" in f_name:
-            recipe_info = update_recipe_list(f_name, distro)
+            print(f"  Found recipe")
+            recipe_list.append(update_recipe_list(f_name, distro))
             continue
         for key, value in ARTIFACT_MAPPING.items():
             if key in f_name:
+                print(f"  Found artifact {key}:{value}")
                 artifact_list.append(update_artifact_list(f_name, value))
 
+    # create the base manifest information
     dict_info = {
-        'version': "1.0.0",
+        'version': "1.1.0",
         'images': {
-            f'{image_name}': {
-                'artifacts': artifact_list
-            }
         },
         'recipes': {
-            f'{image_name}': recipe_info
         }
     }
+    
+    # Add recipes to the manifest
+    # If there is only one, use the image-name provide
+    if len(recipe_list) == 1:
+        dict_info['recipes'][f'{image_name}'] = recipe_list[0]
+    else:
+        # add appending the arch to each if there are more than one
+        for recipe in recipe_list:
+            name = f"{image_name}-{recipe['arch']}"
+            dict_info['recipes'][f'{name}'] =  recipe
+
+    # Add images to the manifest
+    # NOTE: only one image (arch:x86_64) created now, this will need to be updated
+    #  if we start releasing multiple images.
+    dict_info['images'][f'{image_name}'] = {'artifacts' : artifact_list, 'arch':'x86_64'}
+
     with open(r'manifest.yaml', 'w') as file:
         yaml.dump(dict_info, file)
 
@@ -73,6 +89,7 @@ def update_artifact_list(artifact, arti_type):
     original_artifact = artifact
     fix_file_perms(original_artifact)
     artifact = re.sub('^(.*[\\\/])', '', artifact)
+    print(f"    RE processed artifact name: {artifact}")
     new_item = {
         'link': {
             'path': f'/{artifact}',
@@ -85,8 +102,17 @@ def update_artifact_list(artifact, arti_type):
 
 
 def update_recipe_list(recipe, distro):
+    # strip out base direcotries from image name
     original_recipe = recipe
     recipe = re.sub('^(.*[\\\/])', '', recipe)
+    
+    # figure out arch from image name - default to x86_64
+    arch = 'x86_64'
+    if 'aarch64' in recipe or 'arm64' in recipe:
+        arch = 'aarch64'
+
+    # construct the recipe data object
+    # NOTE: require_dkms is always false for the barebones images
     new_item = {
         'link': {
             'path': f'/{recipe}',
@@ -94,7 +120,9 @@ def update_recipe_list(recipe, distro):
         },
         'md5': f'{get_md5sum(original_recipe)}',
         'linux_distribution': f'{distro}',
-        'recipe_type': 'kiwi-ng'
+        'recipe_type': 'kiwi-ng',
+        'arch': f'{arch}',
+        'require_dkms': False
     }
 
     return new_item

@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2022-2023 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -37,4 +37,4 @@ also_include_extensions:
 
 # This file has its own non-HPE copyright
 also_exclude_files:
-    - "kiwi-ng/cray-sles15sp4-barebones/config.sh"
+    - "kiwi-ng/cray-sles15sp5-barebones/config.sh"
