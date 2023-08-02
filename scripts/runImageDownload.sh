@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2023 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -22,13 +22,15 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
+
 set -ex
 
-source ./buildPrepHelpers.sh
-source ./vars.sh
+# Get the current version of the MTL compute image 'COMPUTE_IMAGE_ID'
+source /dev/stdin <<< "$(curl -s https://raw.githubusercontent.com/Cray-HPE/csm/release/1.5/assets.sh)"
 
-# Set the cray-sles15sp5-csm-barebones image version from build time environment variables
-replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" kiwi-ng/cray-sles15sp5-barebones/config-template.xml.j2
+# Get the other defined vars
+source scripts/vars.sh
 
-# Set the product version in the Dockerfile_csm-sles15sp5-barebones.image-recipe file
-replace_tag_in_file product_version "${VERSION}" Dockerfile_csm-sles15sp5-barebones.image-recipe
+# Call downloadImages with the compute image version
+mkdir -p download
+scripts/downloadImages.py --targetDir download --csm-version ${VERSION} --compute-image-version ${COMPUTE_IMAGE_ID} --compute-image-server ${COMPUTE_IMAGE_SERVER}

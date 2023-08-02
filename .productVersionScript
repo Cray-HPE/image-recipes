@@ -19,5 +19,5 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 # (MIT License)
-source ./vars.sh
+source ./scripts/vars.sh
 echo ${VERSION}

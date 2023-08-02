@@ -28,6 +28,9 @@ import hashlib
 import re
 import os
 import stat
+import sys
+
+from pathlib import Path
 
 ARTIFACT_MAPPING = {
     "Image":           "application/vnd.cray.image.kernel",
@@ -39,9 +42,89 @@ ARTIFACT_MAPPING = {
     "boot_parameters": "application/vnd.cray.image.parameters.boot",
 }
 
-def create_manifest(files, distro, image_name):
+def create_manifest(files, downloadDir, distro, image_name):
+    # create the base manifest information
+    manifest_info = {
+        'version': "1.1.0",
+        'images': {
+        },
+        'recipes': {
+        }
+    }
+
+    # handle the files from the recipes and built images
+    add_built_files(manifest_info=manifest_info, files=files, distro=distro, image_name=image_name)
+
+    # handle the images downloaded but not built here
+    add_downloaded_images(manifest_info=manifest_info, downloadDir=downloadDir)
+
+    # write out the manifest file
+    with open(r'manifest.yaml', 'w') as file:
+        yaml.dump(manifest_info, file)
+
+def add_downloaded_images(manifest_info: dict, downloadDir: str) -> None:
+    '''
+    Each subdir of the downloadDir will be treated as a separate image to be
+    imported. The name of the subdir will be interpreted as the name of the
+    resulting image. The arch of the image (x86_64 or aarch64) must be in either
+    the subdir name, or at least one of the image file names. If there are conflicts
+    this will exit with a failure.
+    '''
+    # get the subdirs of downloadDir
+    print(f"Walking: {downloadDir}")
+    for path,dirs,files in os.walk(downloadDir):
+        print(f"Processing Path: {path}, Dirs: {dirs}, Files: {files}")
+        if len(files) == 0:
+            print(f"  No files found - skipping")
+            continue
+
+        # pickle away the image name
+        imageName = str(Path(path).relative_to(downloadDir))
+        imageArch = None
+        artifact_list = []
+
+        print(f" ImageName: {imageName}")
+        # see if the dir name has the arch in it
+        if 'x86_64' in imageName:
+            imageArch = 'x86_64'
+        elif 'aarch64' in imageName:
+            imageArch = 'aarch64'
+
+        # process each img file
+        for imgFile in files:
+            # Pull the arch from the filename - compare with current arch
+            fileFullPath = os.path.join(path,imgFile)
+            print(f"  Processing file: {imgFile}")
+            if 'x86_64' in imgFile:
+                if imageArch is None:
+                    imageArch = 'x86_64'
+                elif imageArch != 'x86_64':
+                    print(f"Error in {fileFullPath} - incompatible arch. Exiting")
+                    sys.exit(1)
+            elif 'aarch64' in imgFile:
+                if imageArch is None:
+                    imageArch = 'aarch64'
+                elif imageArch != 'aarch64':
+                    print(f"Error in {fileFullPath} - incompatible arch. Exiting")
+                    sys.exit(1)
+
+            # process the type of file
+            for key, value in ARTIFACT_MAPPING.items():
+                if key in imgFile:
+                    print(f"  Found artifact {key}:{value}")
+                    artifact_list.append(update_artifact_list(fileFullPath, value, imageName))
+
+        # make sure an arch was specified
+        if imageArch is None:
+            print(f"Was not able to determine arch of {path}")
+            sys.exit(1)
+
+        # record this image in the manifest
+        manifest_info['images'][f'{imageName}'] = {'artifacts' : artifact_list, 'arch':f'{imageArch}'}
+
+def add_built_files(manifest_info: dict, files: list, distro: str, image_name: str) -> None:
     # Process the file list building up recipe info and image artifacts
-    # NOTE - for the time being, this is assuming possible multipe
+    # NOTE - for the time being, this is assuming possible multiple
     # recipes (same recipe, different arch versions) and one pre-built image
     artifact_list = []
     recipe_list = []
@@ -57,38 +140,27 @@ def create_manifest(files, distro, image_name):
                 print(f"  Found artifact {key}:{value}")
                 artifact_list.append(update_artifact_list(f_name, value))
 
-    # create the base manifest information
-    dict_info = {
-        'version': "1.1.0",
-        'images': {
-        },
-        'recipes': {
-        }
-    }
-    
     # Add recipes to the manifest
     # If there is only one, use the image-name provide
     if len(recipe_list) == 1:
-        dict_info['recipes'][f'{image_name}'] = recipe_list[0]
+        manifest_info['recipes'][f'{image_name}'] = recipe_list[0]
     else:
         # add appending the arch to each if there are more than one
         for recipe in recipe_list:
             name = f"{image_name}-{recipe['arch']}"
-            dict_info['recipes'][f'{name}'] =  recipe
+            manifest_info['recipes'][f'{name}'] =  recipe
 
     # Add images to the manifest
     # NOTE: only one image (arch:x86_64) created now, this will need to be updated
     #  if we start releasing multiple images.
-    dict_info['images'][f'{image_name}'] = {'artifacts' : artifact_list, 'arch':'x86_64'}
+    manifest_info['images'][f'{image_name}'] = {'artifacts' : artifact_list, 'arch':'x86_64'}
 
-    with open(r'manifest.yaml', 'w') as file:
-        yaml.dump(dict_info, file)
-
-
-def update_artifact_list(artifact, arti_type):
+def update_artifact_list(artifact, arti_type, path_dir=None):
     original_artifact = artifact
     fix_file_perms(original_artifact)
     artifact = re.sub('^(.*[\\\/])', '', artifact)
+    if path_dir != None:
+        artifact = f'{path_dir}/{artifact}'
     print(f"    RE processed artifact name: {artifact}")
     new_item = {
         'link': {
@@ -155,6 +227,7 @@ def create_arg_parser():
     parser.add_argument('image_name', type=str,
                         help='Name of the kiwi image and kiwi recipe.')
     parser.add_argument('--files', type=str, help='List of files to update the manifest file with.')
+    parser.add_argument('--downloadDir', type=str, help='Directory where downloaded images are stored.')
     parser.add_argument('--distro', type=str, help='Distribution type.')
     args = parser.parse_args()
     args.files = list(args.files.split())
@@ -163,7 +236,7 @@ def create_arg_parser():
 
 def main():
     args = create_arg_parser()
-    create_manifest(args.files, args.distro, args.image_name)
+    create_manifest(args.files, args.downloadDir, args.distro, args.image_name)
 
 if __name__ == '__main__':
     main()

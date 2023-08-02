@@ -32,6 +32,10 @@ export SLES_SP="SP${SLES_SPNUM}"
 export SLES_SP_LOWER="sp${SLES_SPNUM}"
 export SLES_ARCH="x86_64"
 
+# Variables for MTL generated compute images
+# NOTE: COMPUTE_IMAGE_ID gets imported from https://raw.githubusercontent.com/Cray-HPE/csm/release/CSM_REL/assets.sh
+export COMPUTE_IMAGE_SERVER="https://artifactory.algol60.net/artifactory/csm-images/stable/compute/"
+
 # For developing for a master distribution, use 'master' here.
 # For developing for a release distribution, use product release version
 #  - ${GIT_BRANCH} comes from the Jenkins pipeline

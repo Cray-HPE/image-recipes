@@ -38,7 +38,8 @@ DISTRO ?= sles15
 
 DOCKERFILE ?= Dockerfile_csm-sles15sp5-barebones.image-recipe
 BUILD_IMAGE ?= arti.hpc.amslabs.hpecorp.net/cos-docker-master-local/cray-kiwi:latest
-BUILD_SCRIPT ?= runKiwiBuild.sh
+BUILD_SCRIPT ?= scripts/runKiwiBuild.sh
+DOWNLOAD_SCRIPT ?= scripts/runImageDownload.sh
 RECIPE_DIRECTORY ?= kiwi-ng/cray-sles15sp5-barebones
 
 CHART_NAME ?= cray-csm-barebones-recipe-install
@@ -46,7 +47,7 @@ CHART_PATH ?= kubernetes
 HELM_UNITTEST_IMAGE ?= quintush/helm-unittest:3.3.0-0.2.5
 
 all : runbuildprep lint kiwi_image chart
-kiwi_image: kiwi_build_prep kiwi_build_image kiwi_build_manifest kiwi_docker_image
+kiwi_image: kiwi_build_prep kiwi_download_images kiwi_build_image kiwi_build_manifest kiwi_docker_image
 chart: chart_setup chart_package chart_test
 
 runbuildprep:
@@ -59,7 +60,10 @@ kiwi_build_prep:
 	docker run -v ${PWD}:/base \
 		${BUILD_IMAGE}
 		rm -rf /base/build
-	./runBuildPrep-image-recipe.sh
+	./scripts/runBuildPrep-image-recipe.sh
+
+kiwi_download_images:
+	./scripts/runImageDownload.sh
 
 kiwi_build_image:
 	docker run --rm --privileged \
@@ -84,19 +88,18 @@ kiwi_build_manifest:
 	docker run --rm --privileged \
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
 		-e IMG_VER=${IMG_VER} -e BUILD_TS=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
-		-v ${PWD}/build:/build -v ${PWD}:/root \
+		-v ${PWD}/build:/build -v ${PWD}/download:/download -v ${PWD}:/root \
 		--workdir /root \
 		${BUILD_IMAGE} \
-		bash -c 'ls -al /build && pwd && python3 create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" ${IMAGE_NAME}-${PRODUCT_VERSION}'
+		bash -c 'ls -al /build && ls -la /download && ls -la && pwd && python3 scripts/create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --downloadDir "download" ${IMAGE_NAME}-${PRODUCT_VERSION}'
 	cat manifest.yaml
-	ls -la build/output/*
 
 kiwi_docker_image:
 	DOCKER_BUILDKIT=1 docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .
 
 chart_setup:
 	mkdir -p ${CHART_PATH}/.packaged
-	./runBuildPrep-helm-chart.sh
+	./scripts/runBuildPrep-helm-chart.sh
 
 chart_package:
 	helm dep up ${CHART_PATH}/${CHART_NAME}
