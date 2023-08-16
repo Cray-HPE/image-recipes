@@ -35,3 +35,10 @@ cray-import-kiwi-recipe-image:
     PRODUCT_NAME: "product_name"
     PRODUCT_VERSION: "product_version"
     CREATE_BOS_SESSION_TEMPLATE: "True"
+    BOS_KERNEL_PARAMETERS: >-
+      console=ttyS0,115200 bad_page=panic crashkernel=512M hugepagelist=2m-2g intel_iommu=off intel_pstate=disable
+      iommu.passthrough=on modprobe.blacklist=amdgpu numa_interleave_omit=headless oops=panic pageblock_order=14
+      rd.neednet=1 rd.retry=10 rd.shell split_lock_detect=off systemd.unified_cgroup_hierarchy=1 ip=dhcp quiet
+      spire_join_token=${SPIRE_JOIN_TOKEN} root=live:s3://boot-images/${ims_image_id}/rootfs
+      nmd_data=url=s3://boot-images/${ims_image_id}/rootfs,etag=${ims_etag}
+

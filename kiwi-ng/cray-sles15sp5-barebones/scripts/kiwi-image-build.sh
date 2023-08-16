@@ -27,7 +27,7 @@
 # Artifacts that will be packaged up should be placed in /base/build/output
 
 set -ex
-source /base/vars.sh
+source /base/scripts/vars.sh
 
 # Set up arch vars as needed
 export ARCH=x86_64

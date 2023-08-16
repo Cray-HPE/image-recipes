@@ -1,7 +1,8 @@
+#!/usr/bin/env sh
 #
 # MIT License
 #
-# (C) Copyright 2020-2023 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2019-2022 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -21,11 +22,14 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-# Ignore everything
-**
+set -ex
 
-# But the following
-!/manifest.yaml
-!/build/output/*csm-1.5*
-!/download
-!/gitInfo.txt
+source ./scripts/buildPrepHelpers.sh
+source ./scripts/vars.sh
+
+# Set the product name and version
+replace_tag_in_file "product_name" csm kubernetes/cray-csm-barebones-recipe-install/values.yaml
+replace_tag_in_file "product_version" "${CSM_RELEASE_VERSION}" kubernetes/cray-csm-barebones-recipe-install/values.yaml
+
+# Debug
+cat kubernetes/cray-csm-barebones-recipe-install/values.yaml
