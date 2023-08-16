@@ -26,7 +26,8 @@
 set -ex
 
 # Get the current version of the MTL compute image 'COMPUTE_IMAGE_ID'
-source /dev/stdin <<< "$(curl -s https://raw.githubusercontent.com/Cray-HPE/csm/release/1.5/assets.sh)"
+# NOTE: change this line for updated csm releases:
+source /dev/stdin <<< "$(curl -s https://raw.githubusercontent.com/Cray-HPE/csm/release/1.6/assets.sh)"
 
 # Get the other defined vars
 source scripts/vars.sh
