@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2023-11-29
+## Changed
+- CASMINST-6727: Use cray-import-kiwi-recipe-image 4.2 for CSM 1.5
+
 ## [2.2.0] - 2023-08-16
 ## Added
 - CASMCMS-8743 - include MTL compute images and fix bos session template generation.
