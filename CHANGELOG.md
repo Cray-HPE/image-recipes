@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2024-02-08
+### Changed
+- CASMINST-6727 - Use `cray-import-kiwi-recipe-image` 4.4 for CSM 1.6
+
 ## [2.4.0] - 2023-11-29
 ### Changed
 - CASMINST-6727 - Use `cray-import-kiwi-recipe-image` 4.3 for CSM 1.6
