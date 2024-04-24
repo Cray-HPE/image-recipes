@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - CASMCMS-8973: Remove unnecessary build artifacts before creating final Docker image, to avoid permission problems.
+- CASMCMS-8973: Remove redundant `DOCKER_VERSION` variable assignment from Jenkinsfile
 
 ## [1.8.0] - 2023-04-06
 
