@@ -117,7 +117,12 @@ kiwi_build_manifest:
 
 kiwi_docker_image:
 	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
-	ls -al build/output || true
+	ls -al build build/output build/output/build || true
+	docker run -v ${PWD}:/base \
+		${BUILD_IMAGE}
+		rm -rf /base/build/output/build
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
+	ls -al build build/output build/output/build || true
 	DOCKER_BUILDKIT=1 docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .
 
 chart_setup:
