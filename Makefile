@@ -112,10 +112,12 @@ kiwi_build_manifest:
 		${BUILD_IMAGE} \
 		bash -c 'ls -al /build && ls -la /download && ls -la && pwd && python3 scripts/create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --downloadDir "download" ${IMAGE_NAME}-${PRODUCT_VERSION}'
 	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
+	ls -al build/output || true
 	cat manifest.yaml
 
 kiwi_docker_image:
 	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
+	ls -al build/output || true
 	DOCKER_BUILDKIT=1 docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .
 
 chart_setup:
