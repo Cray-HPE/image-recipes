@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2019-2023 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2019-2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -85,13 +85,17 @@ kiwi_build_image:
 
 kiwi_build_manifest:
 	$(eval FILES := $(shell find build/output/* -maxdepth 0 | tr '\r\n' ' ' ))
+	# CASMCMS-8973: Delete /build/output/build /build/unpack at the end, because if they contain artifacts that
+	# the Jenkins user cannot read, then the kiwi_docker_image step will fail, even though it does not use
+	# anything from those directories. Ideally we would delete these directories even earlier, as soon as they
+	# have outlived their usefulness, but they definitely need to be gone before kiwi_docker_image.
 	docker run --rm --privileged \
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
 		-e IMG_VER=${IMG_VER} -e BUILD_TS=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
 		-v ${PWD}/build:/build -v ${PWD}/download:/download -v ${PWD}:/root \
 		--workdir /root \
 		${BUILD_IMAGE} \
-		bash -c 'ls -al /build && ls -la /download && ls -la && pwd && python3 scripts/create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --downloadDir "download" ${IMAGE_NAME}-${PRODUCT_VERSION}'
+		bash -c 'ls -al /build && ls -la /download && ls -la && pwd && python3 scripts/create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --downloadDir "download" ${IMAGE_NAME}-${PRODUCT_VERSION} && rm -rf /build/output/build /build/unpack'
 	cat manifest.yaml
 
 kiwi_docker_image:
