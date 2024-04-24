@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - CASMCMS-8973: Remove unnecessary build artifacts before creating final Docker image, to avoid permission problems.
+- CASMCMS-8973: Remove redundant `DOCKER_VERSION` variable assignment from Jenkinsfile
 
 ## [2.3.0] - 2023-08-16
 - CASMCMS-8743 - update the MTL compute image version for csm-1.6 release.
