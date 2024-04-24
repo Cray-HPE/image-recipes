@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.1] - 2024-04-24
+### Changed
+- CASMCMS-8973: Remove unnecessary build artifacts before creating final Docker image, to avoid permission problems.
+- CASMCMS-8973: Remove redundant `DOCKER_VERSION` variable assignment from Jenkinsfile
+
 ## [2.5.0] - 2024-02-08
 ### Changed
 - CASMINST-6727 - Use `cray-import-kiwi-recipe-image` 4.4 for CSM 1.6
