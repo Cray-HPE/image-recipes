@@ -57,15 +57,21 @@ lint:
 	./cms_meta_tools/scripts/runLint.sh
 
 kiwi_build_prep:
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	docker run -v ${PWD}:/base \
 		${BUILD_IMAGE}
 		rm -rf /base/build
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	./scripts/runBuildPrep-image-recipe.sh
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 
 kiwi_download_images:
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	./scripts/runImageDownload.sh
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 
 kiwi_build_image:
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	docker run --rm --privileged \
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
 		-e IMG_VER=${IMG_VER} -e BUILD_DATE=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
@@ -74,6 +80,7 @@ kiwi_build_image:
 		${BUILD_IMAGE} \
 		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
 
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	# build aarch64 recipe only
 	docker run --rm --privileged \
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
@@ -83,8 +90,12 @@ kiwi_build_image:
 		${BUILD_IMAGE} \
 		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
 
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
+
 kiwi_build_manifest:
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	$(eval FILES := $(shell find build/output/* -maxdepth 0 | tr '\r\n' ' ' ))
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	docker run --rm --privileged \
 		-e PARENT_BRANCH=${GIT_BRANCH} -e PRODUCT_VERSION=${PRODUCT_VERSION} \
 		-e IMG_VER=${IMG_VER} -e BUILD_TS=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
@@ -92,9 +103,11 @@ kiwi_build_manifest:
 		--workdir /root \
 		${BUILD_IMAGE} \
 		bash -c 'ls -al /build && ls -la /download && ls -la && pwd && python3 scripts/create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --downloadDir "download" ${IMAGE_NAME}-${PRODUCT_VERSION}'
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	cat manifest.yaml
 
 kiwi_docker_image:
+	ls -ald build build/output build/output/build build/output/build/image-root build/output/build/image-root/etc build/output/build/image-root/etc/lvm build/output/build/image-root/etc/lvm/archive || true
 	DOCKER_BUILDKIT=1 docker build --pull ${DOCKER_ARGS} -f ${DOCKERFILE} --tag '${NAME}:${DOCKER_VERSION}' .
 
 chart_setup:
