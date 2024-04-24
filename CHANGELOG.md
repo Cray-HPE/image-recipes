@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Remove unnecessary build artifacts before creating final Docker image, to avoid permission problems.
+- Remove redundant `DOCKER_VERSION` variable assignment from Jenkinsfile
 
 ## [2.5.0] - 2024-02-08
 ### Changed
