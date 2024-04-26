@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.1] - 2023-11-29
 ## Changed
 - CASMINST-6727: Use cray-import-kiwi-recipe-image 4.2 for CSM 1.5
+### Changed 2024-04-26
+- CASMCMS-8973: Remove unnecessary build artifacts before creating final Docker image, to avoid permission problems.
 
 ## [2.2.0] - 2023-08-16
 ## Added
