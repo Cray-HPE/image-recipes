@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2023 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -24,7 +24,7 @@
 
 export PRODUCT_CSM="csm"
 export PRODUCT_COS="cos"
-export VERSION="csm-1.5"
+export VERSION="csm-1.6"
 
 export SLES_VERSION="15"
 export SLES_SPNUM=5
@@ -45,7 +45,7 @@ then
     export CSM_RELEASE_VERSION="master"
     export COS_RELEASE_VERSION="master"
 else
-    export CSM_RELEASE_VERSION="1.5"
+    export CSM_RELEASE_VERSION="1.6"
     export COS_RELEASE_VERSION="2.2"
 fi
 

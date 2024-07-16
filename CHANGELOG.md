@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Update variable values for CSM version from 1.5 to 1.6
+
 ## [2.5.1] - 2024-04-24
 ### Changed
 - CASMCMS-8973: Remove unnecessary build artifacts before creating final Docker image, to avoid permission problems.
