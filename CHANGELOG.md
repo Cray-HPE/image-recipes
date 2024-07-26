@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- CASMCMS-9066: Add `procps` to `bootstrap` package list in `kiwi-ng/cray-sles15sp5-barebones/config-template.xml.j2`,
+  to fix build failure.
+
 ## [2.0.1] - 2024-04-24
 
 ### Changed
