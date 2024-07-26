@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- CASMCMS-9066: Add `procps` to `bootstrap` package list in `kiwi-ng/cray-sles15sp5-barebones/config-template.xml.j2`,
+  to fix build failure.
 
 ## [2.1.1] - 2024-04-24
-
 ### Changed
 - CASMCMS-8973: Remove unnecessary build artifacts before creating final Docker image, to avoid permission problems.
 - CASMCMS-8973: Remove redundant `DOCKER_VERSION` variable assignment from Jenkinsfile
