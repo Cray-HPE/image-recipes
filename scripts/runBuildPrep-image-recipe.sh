@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -27,8 +27,14 @@ set -ex
 source ./scripts/buildPrepHelpers.sh
 source ./scripts/vars.sh
 
-# Set the cray-sles15sp5-csm-barebones image version from build time environment variables
-replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" kiwi-ng/cray-sles15sp5-barebones/config-template.xml.j2
+export SLES_VERSION="15"
+export SLES_SPNUM="6"
+export SLES_SP="SP${SLES_SPNUM}"
+export SLES_SP_LOWER="sp${SLES_SPNUM}"
+export SLES_ARCH="x86_64"
 
-# Set the product version in the Dockerfile_csm-sles15sp5-barebones.image-recipe file
-replace_tag_in_file product_version "${VERSION}" Dockerfile_csm-sles15sp5-barebones.image-recipe
+# Set the barebones image version from build time environment variables
+replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" "kiwi-ng/cray-sles${SLES_VERSION}${SLES_SP_LOWER}-barebones/config-template.xml.j2"
+
+# Set the product version in the Dockerfile_image-recipe file
+replace_tag_in_file product_version "${VERSION}" "Dockerfile_csm-sles${SLES_VERSION}${SLES_SP_LOWER}-barebones.image-recipe"

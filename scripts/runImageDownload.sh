@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2023 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2023-2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -25,9 +25,11 @@
 
 set -ex
 
+# Get the other defined vars
+source scripts/vars.sh
+
 # Get the current version of the MTL compute image 'COMPUTE_IMAGE_ID'
-# NOTE: change this line for updated csm releases:
-source /dev/stdin <<< "$(curl -s https://raw.githubusercontent.com/Cray-HPE/csm/release/1.6/assets.sh)"
+source /dev/stdin <<< "$(curl -s https://raw.githubusercontent.com/Cray-HPE/csm/release/${CSM_MAJ_MIN}/assets.sh)"
 
 # Get the other defined vars
 source scripts/vars.sh

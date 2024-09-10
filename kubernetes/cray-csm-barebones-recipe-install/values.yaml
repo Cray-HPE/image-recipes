@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -28,7 +28,7 @@
 cray-import-kiwi-recipe-image:
   import_image:
     image:
-      repository: artifactory.algol60.net/csm-docker/S-T-A-B-L-E/cray-csm-sles15sp5-barebones-recipe
+      repository: artifactory.algol60.net/csm-docker/S-T-A-B-L-E/cray-csm-sles15sp6-barebones-recipe
 
   import_job:
     name: "product_name-image-recipe-import-product_version"

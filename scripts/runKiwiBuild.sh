@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -26,4 +26,4 @@
 # /base directory prefix. See the pipeline definition here:
 #   https://github.hpe.com/hpe/hpc-dst-jenkins-shared-library/blob/master/vars/kiwiImageRecipeBuildPipeline.groovy
 
-/base/kiwi-ng/cray-sles15sp5-barebones/scripts/kiwi-image-build.sh
+/base/kiwi-ng/cray-sles15sp6-barebones/scripts/kiwi-image-build.sh
