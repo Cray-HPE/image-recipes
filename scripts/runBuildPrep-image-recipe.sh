@@ -27,14 +27,8 @@ set -ex
 source ./scripts/buildPrepHelpers.sh
 source ./scripts/vars.sh
 
-export SLES_VERSION="15"
-export SLES_SPNUM="6"
-export SLES_SP="SP${SLES_SPNUM}"
-export SLES_SP_LOWER="sp${SLES_SPNUM}"
-export SLES_ARCH="x86_64"
-
 # Set the barebones image version from build time environment variables
 replace_tag_in_file CRAY.VERSION.HERE "${CSM_RELEASE_VERSION}" "kiwi-ng/cray-sles${SLES_VERSION}${SLES_SP_LOWER}-barebones/config-template.xml.j2"
 
 # Set the product version in the Dockerfile_image-recipe file
-replace_tag_in_file product_version "${VERSION}" "Dockerfile_csm-sles${SLES_VERSION}${SLES_SP_LOWER}-barebones.image-recipe"
+replace_tag_in_file product_version "${VERSION}" Dockerfile_csm-sles-barebones.image-recipe

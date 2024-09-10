@@ -23,8 +23,8 @@
 #
 # MIT License
 
-SLE_REL ?= 15
-SLE_SP ?= 6
+SLE_REL ?= $(shell head -1 sles_release.version)
+SLE_SP ?= $(shell head -1 sles_sp.version)
 DISTRO ?= sles${SLE_REL}
 DISTRO_SP=${DISTRO}sp${SLE_SP}
 
@@ -41,7 +41,7 @@ IMG_VER ?= ${PRODUCT_VERSION}-${BUILD_DATE}-g${GIT_TAG}
 IMAGE_NAME ?= cray-shasta-csm-${DISTRO_SP}-barebones
 
 
-DOCKERFILE ?= Dockerfile_csm-${DISTRO_SP}-barebones.image-recipe
+DOCKERFILE ?= Dockerfile_csm-sles-barebones.image-recipe
 BUILD_IMAGE ?= arti.hpc.amslabs.hpecorp.net/cos-docker-master-local/cray-kiwi:latest
 BUILD_SCRIPT ?= scripts/runKiwiBuild.sh
 DOWNLOAD_SCRIPT ?= scripts/runImageDownload.sh

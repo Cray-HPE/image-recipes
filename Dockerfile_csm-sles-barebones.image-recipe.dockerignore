@@ -26,6 +26,7 @@
 
 # But the following
 !/manifest.yaml
-!/build/output/*csm-1.6*
+# The CSM version string is filled in at build time
+!/build/output/*csm-CSM_MAJOR_DOT_MINOR*
 !/download
 !/gitInfo.txt

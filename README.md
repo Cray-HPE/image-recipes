@@ -3,7 +3,15 @@
 This repository maintains Cray developed image recipes for building bootable and 
 non-bootable images to be used for Shasta based systems.
 
-### Prerequisites
+## CSM / SLES version files
+
+The source of truth for CSM and SLES versions are:
+* `csm_major.version`
+* `csm_minor.version`
+* `sles_release.version`
+* `sles_sp.version`
+
+## Prerequisites
 
 To build the recipes in this project, you will need to have access to a system
 or virtual machine with the appropriate image building tools installed. It is
@@ -36,11 +44,6 @@ recent commits to that branch.
 For helm charts, a few annotation metadata fields are appended which contain similar information.
 
 For RPMs, a changelog entry is added with similar information.
-
-## New Release Branches
-When making a new release branch:
-    * Be sure to set the `.x` and `.y` files to the desired major and minor version number for this repo for this release. 
-    * If an `update_external_versions.conf` file exists in this repo, be sure to update that as well, if needed.
 
 ## Copyright and License
 This project is copyrighted by Hewlett Packard Enterprise Development LP and is under the MIT
