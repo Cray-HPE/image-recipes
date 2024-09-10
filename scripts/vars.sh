@@ -24,11 +24,11 @@
 
 export PRODUCT_CSM="csm"
 export PRODUCT_COS="cos"
-CSM_MAJ_MIN="1.6"
+CSM_MAJ_MIN="CSM_MAJOR_DOT_MINOR"
 export VERSION="csm-${CSM_MAJ_MIN}"
 
-export SLES_VERSION="15"
-export SLES_SPNUM="6"
+export SLES_VERSION="S-L-E-R-E-L"
+export SLES_SPNUM="S-L-E-S-P"
 export SLES_SP="SP${SLES_SPNUM}"
 export SLES_SP_LOWER="sp${SLES_SPNUM}"
 export SLES_ARCH="x86_64"

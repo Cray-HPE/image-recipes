@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - CASMINST-7001: Update CSM release to 1.6 and SLES SP to 6
+- Consolidate places where CSM and SLES versions are specified
 
 ## [2.5.2] - 2024-07-26
 ### Added

@@ -27,6 +27,7 @@
 @Library('cms-meta-tools') _
 @Library('csm-shared-library') __
 def credentialsId = 'artifactory-algol60-readonly'
+
 pipeline {
     agent {
         label "metal-gcp-builder"
@@ -40,7 +41,9 @@ pipeline {
     }
 
     environment {
-        NAME = "cray-csm-sles15sp6-barebones-recipe"
+        sleRel = sh(returnStdout: true, script: "head -1 sles_release.version").trim()
+        sleSp = sh(returnStdout: true, script: "head -1 sles_sp.version").trim()
+        NAME = "cray-csm-sles${env.sleRel}sp${env.sleSp}-barebones-recipe"
         DESCRIPTION = "Cray System Management (CSM) Barebones Recipes and Images"
         IS_STABLE = getBuildIsStable()
     }
@@ -53,24 +56,18 @@ pipeline {
             }
         }
 
-        stage("Set Versions") {
+        stage("runBuildPrep") {
             steps {
                 // This function is defined in cms-meta-tools:vars/setVersionFiles.groovy
                 setVersionFiles()
-            }
-        }
-
-        stage("runBuildPrep") {
-            steps {
-                 withCredentials([usernamePassword(credentialsId: 'artifactory-algol60-readonly', passwordVariable: 'ARTIFACTORY_PASSWORD', usernameVariable: 'ARTIFACTORY_USERNAME')]) {
+                
+                withCredentials([usernamePassword(credentialsId: 'artifactory-algol60-readonly', passwordVariable: 'ARTIFACTORY_PASSWORD', usernameVariable: 'ARTIFACTORY_USERNAME')]) {
                     sh "make runbuildprep"
-                    }
-            }
-        }
-
-        stage("Lint") {
-            steps {
+                }
+                
                 sh "make lint"
+                
+                sh "mv kiwi-ng/cray-sles-barebones kiwi-ng/cray-sles${env.sleRel}sp${env.sleSp}-barebones"
             }
         }
 
@@ -108,7 +105,7 @@ pipeline {
             }
             steps {
                 script {
-                    publishCsmDockerImage(image: env.NAME, tag: env.DOCKER_VERSION, isStable: env.IS_STABLE, snykTargetFile: "Dockerfile_csm-sles15sp6-barebones.image-recipe")
+                    publishCsmDockerImage(image: env.NAME, tag: env.DOCKER_VERSION, isStable: env.IS_STABLE, snykTargetFile: "Dockerfile_csm-sles-barebones.image-recipe")
                     publishCsmHelmCharts(component: env.NAME, chartsPath: "${WORKSPACE}/kubernetes/.packaged", isStable: env.IS_STABLE)
                 }
             }

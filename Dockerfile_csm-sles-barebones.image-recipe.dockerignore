@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2023 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -21,16 +21,12 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-# Dockerfile for image which holds the CSM barebones image (squashfs) and Kiwi recipe
-FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-imsload as base
+# Ignore everything
+**
 
-
-# Use for testing/not in pipeline builds
-#FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:latest as base
-
-# Copy the IMS import manifest
-COPY manifest.yaml /
-
-# Copy the image/recipe file
-COPY --chown=nobody:nobody build/output/*product_version* /
-COPY --chown=nobody:nobody download/ /
+# But the following
+!/manifest.yaml
+# The CSM version string is filled in at build time
+!/build/output/*csm-CSM_MAJOR_DOT_MINOR*
+!/download
+!/gitInfo.txt

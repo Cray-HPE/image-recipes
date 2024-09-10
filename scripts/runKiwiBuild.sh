@@ -26,4 +26,4 @@
 # /base directory prefix. See the pipeline definition here:
 #   https://github.hpe.com/hpe/hpc-dst-jenkins-shared-library/blob/master/vars/kiwiImageRecipeBuildPipeline.groovy
 
-/base/kiwi-ng/cray-sles15sp6-barebones/scripts/kiwi-image-build.sh
+/base/kiwi-ng/cray-slesS-L-E-R-E-LspS-L-E-S-P-barebones/scripts/kiwi-image-build.sh
