@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Update CSM release to 1.7
 
+### Dependencies
+- CASMCMS-9282: Update to `cray-import-kiwi-recipe-image` 4.5 for CSM 1.7
+- CASMCMS-9282: Update to `ims-load-artifacts` 2.8 for CSM 1.7
+
 ## [2.6.0] - 2024-09-10
 ### Changed
 - CASMINST-7001: Update CSM release to 1.6 and SLES SP to 6
