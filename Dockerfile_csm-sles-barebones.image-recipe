@@ -22,8 +22,8 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 # Dockerfile for image which holds the CSM barebones image (squashfs) and Kiwi recipe
-FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-imsload as base
-
+#FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-imsload as base
+FROM artifactory.algol60.net/csm-docker/unstable/cray-ims-load-artifacts:2.8.0-casmcms-9282.14_cf0900b as base
 
 # Use for testing/not in pipeline builds
 #FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:latest as base
