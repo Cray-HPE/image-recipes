@@ -24,6 +24,9 @@
 # Dockerfile for image which holds the CSM barebones image (squashfs) and Kiwi recipe
 FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:0.0.0-imsload as base
 
+RUN apk add --upgrade --no-cache apk-tools && \
+    apk update && \
+    apk -U upgrade --no-cache
 
 # Use for testing/not in pipeline builds
 #FROM artifactory.algol60.net/csm-docker/stable/cray-ims-load-artifacts:latest as base
