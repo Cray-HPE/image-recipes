@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.0] - 2025-06-17
+### Changed
+- CASMCSM-8022: Updated ims-load-artifacts to 2.9
+
 ## [2.7.0] - 2025-02-18
 ### Changed
 - Update CSM release to 1.7
