@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.9.0] - 2025-08-19
 ### Dependencies
 - CASMCMS-9510: Updated ims-load-artifacts version to 2.10.x
 
