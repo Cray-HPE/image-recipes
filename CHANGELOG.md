@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.10.0] - 2025-09-25
+### Changed
+- CASMCMS-9542 - Update SLES SP version to 7 for CSM 1.7.1
+
 ## [2.9.0] - 2025-08-19
 ### Dependencies
 - CASMCMS-9510: Updated ims-load-artifacts version to 2.10.x
