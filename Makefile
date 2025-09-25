@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2019-2024 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2019-2025 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -42,7 +42,7 @@ IMAGE_NAME ?= cray-shasta-csm-${DISTRO_SP}-barebones
 
 
 DOCKERFILE ?= Dockerfile_csm-sles-barebones.image-recipe
-BUILD_IMAGE ?= arti.hpc.amslabs.hpecorp.net/cos-docker-master-local/cray-kiwi:latest
+BUILD_IMAGE ?= artifactory.algol60.net/csm-docker/stable/cray-ims-kiwi-ng-opensuse-x86_64-builder:0.0.0-kiwibuilder
 BUILD_SCRIPT ?= scripts/runKiwiBuild.sh
 DOWNLOAD_SCRIPT ?= scripts/runImageDownload.sh
 RECIPE_DIRECTORY ?= kiwi-ng/cray-${DISTRO_SP}-barebones
@@ -63,8 +63,9 @@ lint:
 
 kiwi_build_prep:
 	docker run -v ${PWD}:/base \
-		${BUILD_IMAGE}
-		rm -rf /base/build
+		--entrypoint /bin/bash \
+		${BUILD_IMAGE} \
+		-c "rm -rf /base/build"
 	./scripts/runBuildPrep-image-recipe.sh
 
 kiwi_download_images:
@@ -76,8 +77,9 @@ kiwi_build_image:
 		-e IMG_VER=${IMG_VER} -e BUILD_DATE=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
 		-e ARTIFACTORY_USER=${ARTIFACTORY_USER} -e ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} \
 		-e BUILD_ARCH="x86_64" -v ${PWD}/build:/build -v ${PWD}:/base \
+		--entrypoint /bin/bash \
 		${BUILD_IMAGE} \
-		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
+		-c "/base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}"
 
 	# build aarch64 recipe only
 	docker run --rm --privileged \
@@ -85,8 +87,9 @@ kiwi_build_image:
 		-e IMG_VER=${IMG_VER} -e BUILD_DATE=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
 		-e ARTIFACTORY_USER=${ARTIFACTORY_USER} -e ARTIFACTORY_TOKEN=${ARTIFACTORY_TOKEN} \
 		-e BUILD_ARCH="aarch64" -v ${PWD}/build:/build -v ${PWD}:/base \
+		--entrypoint /bin/bash \
 		${BUILD_IMAGE} \
-		/bin/bash /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
+		-c /base/${BUILD_SCRIPT} ${RECIPE_DIRECTORY}
 
 kiwi_build_manifest:
 	$(eval FILES := $(shell find build/output/* -maxdepth 0 | tr '\r\n' ' ' ))
@@ -99,8 +102,9 @@ kiwi_build_manifest:
 		-e IMG_VER=${IMG_VER} -e BUILD_TS=${BUILD_DATE} -e GIT_TAG=${GIT_TAG} \
 		-v ${PWD}/build:/build -v ${PWD}/download:/download -v ${PWD}:/root \
 		--workdir /root \
+		--entrypoint /bin/bash \
 		${BUILD_IMAGE} \
-		bash -c 'ls -al /build && ls -la /download && ls -la && pwd && python3 scripts/create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --downloadDir "download" ${IMAGE_NAME}-${PRODUCT_VERSION} && rm -rf /build/output/build /build/unpack'
+		-c 'ls -al /build && ls -la /download && ls -la && pwd && python3 scripts/create_init_ims_manifest.py --distro "${DISTRO}" --files "${FILES}" --downloadDir "download" ${IMAGE_NAME}-${PRODUCT_VERSION} && rm -rf /build/output/build /build/unpack'
 	cat manifest.yaml
 
 kiwi_docker_image:

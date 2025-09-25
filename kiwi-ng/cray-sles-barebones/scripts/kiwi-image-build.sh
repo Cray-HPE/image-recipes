@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2024 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2025 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -40,6 +40,9 @@ fi
 echo "BUILD_ARCH=${BUILD_ARCH}, ARCH=${ARCH}"
 
 IMAGE_NAME=cray-shasta-csm-barebones-sles${SLES_VERSION}${SLES_SP_LOWER}.${SLES_ARCH}-${IMG_VER}
+
+# Install needed python packages not included in cray-ims-kiwi-ng-opensuse-x86_64-builder
+python3 -m pip install jinja2-cli PyYAML
 
 # Setup build directories
 mkdir -p /base/build/output /base/build/unpack
